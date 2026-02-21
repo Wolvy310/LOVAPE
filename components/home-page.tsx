@@ -128,8 +128,8 @@ export function HomePage() {
         </div>
 
         <h1>{copy.title}</h1>
-        <h2 className="quality-title">{copy.qualityTitle}</h2>
         <p className="subtitle">{copy.subtitle}</p>
+        <h2 className="quality-title">{copy.qualityTitle}</h2>
       </div>
     </main>
   );
