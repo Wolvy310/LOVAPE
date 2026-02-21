@@ -71,6 +71,12 @@ export function HomePage() {
 
   return (
     <main className="home-page">
+      <div className="hero-content">
+        <h1>{copy.title}</h1>
+        <p className="subtitle">{copy.subtitle}</p>
+        <h2 className="quality-title">{copy.qualityTitle}</h2>
+      </div>
+
       <header className="top-banner">
         <details className="menu-dropdown">
           <summary className="menu-trigger">Menu</summary>
@@ -92,44 +98,38 @@ export function HomePage() {
         </nav>
       </header>
 
-      <div className="hero-content">
-        <div className="controls">
-          <div className="switch-group">
-            <span>{copy.controls.language}</span>
-            <div className="segmented">
-              {(["fr", "en"] as const).map((lang) => (
-                <button
-                  key={lang}
-                  type="button"
-                  className={`switch-btn ${language === lang ? "active" : ""}`}
-                  onClick={() => setLanguage(lang)}
-                >
-                  {lang.toUpperCase()}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div className="switch-group">
-            <span>{copy.controls.theme}</span>
-            <div className="segmented">
-              {(["dark", "light"] as const).map((mode) => (
-                <button
-                  key={mode}
-                  type="button"
-                  className={`switch-btn ${theme === mode ? "active" : ""}`}
-                  onClick={() => setTheme(mode)}
-                >
-                  {mode === "dark" ? copy.controls.dark : copy.controls.light}
-                </button>
-              ))}
-            </div>
+      <div className="controls">
+        <div className="switch-group">
+          <span>{copy.controls.language}</span>
+          <div className="segmented">
+            {(["fr", "en"] as const).map((lang) => (
+              <button
+                key={lang}
+                type="button"
+                className={`switch-btn ${language === lang ? "active" : ""}`}
+                onClick={() => setLanguage(lang)}
+              >
+                {lang.toUpperCase()}
+              </button>
+            ))}
           </div>
         </div>
 
-        <h1>{copy.title}</h1>
-        <p className="subtitle">{copy.subtitle}</p>
-        <h2 className="quality-title">{copy.qualityTitle}</h2>
+        <div className="switch-group">
+          <span>{copy.controls.theme}</span>
+          <div className="segmented">
+            {(["dark", "light"] as const).map((mode) => (
+              <button
+                key={mode}
+                type="button"
+                className={`switch-btn ${theme === mode ? "active" : ""}`}
+                onClick={() => setTheme(mode)}
+              >
+                {mode === "dark" ? copy.controls.dark : copy.controls.light}
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
     </main>
   );
