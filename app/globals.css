@@ -66,19 +66,8 @@ body {
 .top-tabs {
   display: flex;
   gap: 0.35rem;
-  max-width: 0;
-  opacity: 0;
-  overflow: hidden;
-  pointer-events: none;
-  transition: max-width 0.28s ease, opacity 0.2s ease;
+  overflow-x: auto;
   white-space: nowrap;
-}
-
-.top-banner:hover .top-tabs,
-.top-banner:focus-within .top-tabs {
-  max-width: 80rem;
-  opacity: 1;
-  pointer-events: auto;
 }
 
 .menu-dropdown {
@@ -224,13 +213,6 @@ h1 {
 }
 
 @media (max-width: 640px) {
-  .top-tabs {
-    max-width: none;
-    opacity: 1;
-    overflow-x: auto;
-    pointer-events: auto;
-  }
-
   .floating-controls {
     left: 0.75rem;
     right: 0.75rem;
