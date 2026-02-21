@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 type Language = "fr" | "en";
@@ -99,7 +100,11 @@ export function HomePage() {
   return (
     <main className="home-page">
       <div className="hero-content">
-        <h1>{copy.title}</h1>
+        <h1>
+          <Link href="/" className="brand-link" aria-label="Retour a l'accueil">
+            {copy.title}
+          </Link>
+        </h1>
         <p className="subtitle">{copy.subtitle}</p>
         <h2 className="quality-title">{copy.qualityTitle}</h2>
       </div>
