@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
 type Language = "fr" | "en";
 type Theme = "dark" | "light";
@@ -43,31 +43,46 @@ const content = {
 export function HomePage() {
   const [language, setLanguage] = useState<Language>("fr");
   const [theme, setTheme] = useState<Theme>("dark");
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const savedLanguage = window.localStorage.getItem("lovape-language");
-    const savedTheme = window.localStorage.getItem("lovape-theme");
+    try {
+      const savedLanguage = window.localStorage.getItem("lovape-language");
+      const savedTheme = window.localStorage.getItem("lovape-theme");
 
-    if (savedLanguage === "fr" || savedLanguage === "en") {
-      setLanguage(savedLanguage);
-    }
+      if (savedLanguage === "fr" || savedLanguage === "en") {
+        setLanguage(savedLanguage);
+      }
 
-    if (savedTheme === "dark" || savedTheme === "light") {
-      setTheme(savedTheme);
+      if (savedTheme === "dark" || savedTheme === "light") {
+        setTheme(savedTheme);
+      }
+    } catch {
+      // Ignore storage access errors and keep defaults.
     }
   }, []);
 
   useEffect(() => {
     document.documentElement.lang = language;
-    window.localStorage.setItem("lovape-language", language);
+    try {
+      window.localStorage.setItem("lovape-language", language);
+    } catch {
+      // Ignore storage access errors.
+    }
   }, [language]);
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
-    window.localStorage.setItem("lovape-theme", theme);
+    document.documentElement.style.colorScheme = theme;
+    try {
+      window.localStorage.setItem("lovape-theme", theme);
+    } catch {
+      // Ignore storage access errors.
+    }
   }, [theme]);
 
-  const copy = useMemo(() => content[language], [language]);
+  const copy = content[language];
+  const menuId = "lovape-menu-panel";
 
   return (
     <main className="home-page">
@@ -78,27 +93,54 @@ export function HomePage() {
       </div>
 
       <header className="top-banner">
-        <div className="menu-dropdown" tabIndex={0}>
-          <span className="menu-trigger">Menu</span>
-          <nav className="menu-panel" aria-label="Menu complet">
-            {tabs.map((tab) => (
-              <a key={`menu-${tab}`} href="#" className="menu-link">
-                {tab}
-              </a>
-            ))}
+        <div
+          className={`menu-dropdown ${menuOpen ? "open" : ""}`}
+          onMouseEnter={() => setMenuOpen(true)}
+          onMouseLeave={() => setMenuOpen(false)}
+          onFocusCapture={() => setMenuOpen(true)}
+          onBlurCapture={(event) => {
+            if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+              setMenuOpen(false);
+            }
+          }}
+        >
+          <button
+            type="button"
+            className="menu-trigger"
+            aria-haspopup="menu"
+            aria-expanded={menuOpen}
+            aria-controls={menuId}
+            onClick={() => setMenuOpen((previous) => !previous)}
+          >
+            Menu
+          </button>
+          <nav id={menuId} className="menu-panel" aria-label="Menu complet">
+            <ul>
+              {tabs.map((tab) => (
+                <li key={`menu-${tab}`}>
+                  <a href="#" className="menu-link">
+                    {tab}
+                  </a>
+                </li>
+              ))}
+            </ul>
           </nav>
         </div>
 
         <nav className="top-tabs" aria-label="Navigation principale">
-          {tabs.map((tab) => (
-            <a key={tab} href="#" className="tab-link">
-              {tab}
-            </a>
-          ))}
+          <ul>
+            {tabs.map((tab) => (
+              <li key={tab}>
+                <a href="#" className="tab-link">
+                  {tab}
+                </a>
+              </li>
+            ))}
+          </ul>
         </nav>
       </header>
 
-      <div className="floating-controls">
+      <div className="floating-controls" aria-label="Parametres d'affichage">
         <div className="controls">
           <div className="switch-group">
             <span>{copy.controls.language}</span>
@@ -109,6 +151,7 @@ export function HomePage() {
                   type="button"
                   className={`switch-btn ${language === lang ? "active" : ""}`}
                   onClick={() => setLanguage(lang)}
+                  aria-pressed={language === lang}
                 >
                   {lang.toUpperCase()}
                 </button>
@@ -125,6 +168,7 @@ export function HomePage() {
                   type="button"
                   className={`switch-btn ${theme === mode ? "active" : ""}`}
                   onClick={() => setTheme(mode)}
+                  aria-pressed={theme === mode}
                 >
                   {mode === "dark" ? copy.controls.dark : copy.controls.light}
                 </button>
