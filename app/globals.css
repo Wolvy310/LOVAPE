@@ -141,6 +141,13 @@ body {
   gap: 1rem;
 }
 
+.floating-controls {
+  position: fixed;
+  right: 1rem;
+  top: 1rem;
+  z-index: 80;
+}
+
 .controls {
   display: flex;
   flex-wrap: wrap;
@@ -212,6 +219,16 @@ h1 {
 }
 
 @media (max-width: 640px) {
+  .floating-controls {
+    left: 0.75rem;
+    right: 0.75rem;
+    top: 0.75rem;
+  }
+
+  .controls {
+    justify-content: flex-end;
+  }
+
   .controls {
     gap: 0.6rem;
   }

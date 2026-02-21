@@ -98,36 +98,38 @@ export function HomePage() {
         </nav>
       </header>
 
-      <div className="controls">
-        <div className="switch-group">
-          <span>{copy.controls.language}</span>
-          <div className="segmented">
-            {(["fr", "en"] as const).map((lang) => (
-              <button
-                key={lang}
-                type="button"
-                className={`switch-btn ${language === lang ? "active" : ""}`}
-                onClick={() => setLanguage(lang)}
-              >
-                {lang.toUpperCase()}
-              </button>
-            ))}
+      <div className="floating-controls">
+        <div className="controls">
+          <div className="switch-group">
+            <span>{copy.controls.language}</span>
+            <div className="segmented">
+              {(["fr", "en"] as const).map((lang) => (
+                <button
+                  key={lang}
+                  type="button"
+                  className={`switch-btn ${language === lang ? "active" : ""}`}
+                  onClick={() => setLanguage(lang)}
+                >
+                  {lang.toUpperCase()}
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
 
-        <div className="switch-group">
-          <span>{copy.controls.theme}</span>
-          <div className="segmented">
-            {(["dark", "light"] as const).map((mode) => (
-              <button
-                key={mode}
-                type="button"
-                className={`switch-btn ${theme === mode ? "active" : ""}`}
-                onClick={() => setTheme(mode)}
-              >
-                {mode === "dark" ? copy.controls.dark : copy.controls.light}
-              </button>
-            ))}
+          <div className="switch-group">
+            <span>{copy.controls.theme}</span>
+            <div className="segmented">
+              {(["dark", "light"] as const).map((mode) => (
+                <button
+                  key={mode}
+                  type="button"
+                  className={`switch-btn ${theme === mode ? "active" : ""}`}
+                  onClick={() => setTheme(mode)}
+                >
+                  {mode === "dark" ? copy.controls.dark : copy.controls.light}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       </div>
