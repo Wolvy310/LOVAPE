@@ -18,7 +18,7 @@ const content = {
   },
   en: {
     title: "LOVAPE",
-    subtitle: "Bien vaper - mieux vaper",
+    subtitle: "Vape well - vape better",
     controls: {
       language: "Language",
       theme: "Theme",
