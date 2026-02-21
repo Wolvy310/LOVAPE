@@ -12,8 +12,6 @@ const content = {
     qualityTitle: "E-liquides Fran\u00e7ais de qualit\u00e9s et vape responsable",
     subtitle: "Bien vaper - mieux vaper",
     navigationLabel: "Navigation principale",
-    menuLabel: "Menu",
-    menuAria: "Menu complet",
     tabs: [
       "E-liquides",
       "E-cigarrettes",
@@ -35,8 +33,6 @@ const content = {
     qualityTitle: "French quality e-liquids and responsible vaping",
     subtitle: "Vape well - vape better",
     navigationLabel: "Main navigation",
-    menuLabel: "Menu",
-    menuAria: "Full menu",
     tabs: [
       "E-liquids",
       "E-cigarettes",
@@ -110,21 +106,6 @@ export function HomePage() {
       </div>
 
       <header className="top-banner">
-        <details className="menu-dropdown">
-          <summary className="menu-trigger">{copy.menuLabel}</summary>
-          <nav className="menu-panel" aria-label={copy.menuAria}>
-            <ul>
-              {copy.tabs.map((tab) => (
-                <li key={`menu-${tab}`}>
-                  <a href="#" className="menu-link">
-                    {tab}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        </details>
-
         <nav className="top-tabs" aria-label={copy.navigationLabel}>
           <ul>
             {copy.tabs.map((tab) => (
