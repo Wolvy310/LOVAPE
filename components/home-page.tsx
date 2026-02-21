@@ -94,6 +94,7 @@ export function HomePage() {
       </div>
 
       <h1>{copy.title}</h1>
+      <h2 className="quality-title">E-liquides Français de qualités et vape responsable</h2>
       <p className="subtitle">{copy.subtitle}</p>
     </main>
   );
