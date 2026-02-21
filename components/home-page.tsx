@@ -78,8 +78,8 @@ export function HomePage() {
       </div>
 
       <header className="top-banner">
-        <details className="menu-dropdown">
-          <summary className="menu-trigger">Menu</summary>
+        <div className="menu-dropdown" tabIndex={0}>
+          <span className="menu-trigger">Menu</span>
           <nav className="menu-panel" aria-label="Menu complet">
             {tabs.map((tab) => (
               <a key={`menu-${tab}`} href="#" className="menu-link">
@@ -87,7 +87,7 @@ export function HomePage() {
               </a>
             ))}
           </nav>
-        </details>
+        </div>
 
         <nav className="top-tabs" aria-label="Navigation principale">
           {tabs.map((tab) => (
