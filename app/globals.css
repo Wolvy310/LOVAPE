@@ -1,6 +1,5 @@
 :root {
   --bg: #f5f5f5;
-  --bg-soft: #ececec;
   --text: #111111;
   --panel: #ffffff;
   --border: #d9d9d9;
@@ -12,11 +11,10 @@
 }
 
 :root[data-theme="dark"] {
-  --bg: #0f0f10;
-  --bg-soft: #17181b;
+  --bg: #050505;
   --text: #f2f2f2;
-  --panel: #191a1c;
-  --border: #34363a;
+  --panel: #121212;
+  --border: #2a2a2a;
   --muted: #b2b6be;
   --active-bg: #f2f2f2;
   --active-text: #111111;
@@ -36,10 +34,7 @@ body {
 }
 
 body {
-  background:
-    radial-gradient(circle at 10% -10%, color-mix(in srgb, var(--active-bg) 10%, transparent), transparent 45%),
-    radial-gradient(circle at 90% 0%, color-mix(in srgb, var(--border) 32%, transparent), transparent 42%),
-    linear-gradient(180deg, var(--bg), var(--bg-soft));
+  background: var(--bg);
   color: var(--text);
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   line-height: 1.4;
@@ -100,7 +95,7 @@ h1 {
 .top-banner {
   align-items: center;
   backdrop-filter: blur(8px);
-  background: color-mix(in srgb, var(--panel) 88%, transparent);
+  background: var(--panel);
   border: 1px solid var(--border);
   border-radius: 999px;
   box-shadow: var(--shadow-soft);
@@ -118,8 +113,7 @@ h1 {
   overflow-x: auto;
 }
 
-.top-tabs ul,
-.menu-panel ul {
+.top-tabs ul {
   align-items: center;
   display: flex;
   gap: 0.35rem;
@@ -127,12 +121,6 @@ h1 {
   margin: 0;
   padding: 0;
   white-space: nowrap;
-}
-
-.menu-panel ul {
-  align-items: stretch;
-  flex-direction: column;
-  gap: 0.4rem;
 }
 
 .top-tabs::-webkit-scrollbar {
@@ -144,14 +132,7 @@ h1 {
   border-radius: 999px;
 }
 
-.menu-dropdown {
-  flex: 0 0 auto;
-  position: relative;
-}
-
-.menu-trigger,
-.tab-link,
-.menu-link {
+.tab-link {
   background: var(--panel);
   border: 1px solid var(--border);
   border-radius: 999px;
@@ -166,45 +147,11 @@ h1 {
   text-decoration: none;
 }
 
-.menu-trigger {
-  font-family: inherit;
-}
-
-.menu-trigger[aria-expanded="true"],
-.menu-dropdown:hover .menu-trigger,
-.menu-dropdown:focus-within .menu-trigger,
 .tab-link:hover,
-.menu-link:hover,
-.tab-link:focus-visible,
-.menu-link:focus-visible {
+.tab-link:focus-visible {
   background: var(--active-bg);
   border-color: var(--active-bg);
   color: var(--active-text);
-}
-
-.menu-panel {
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: 0.75rem;
-  box-shadow: var(--shadow-soft);
-  display: none;
-  left: 0;
-  min-width: 14.5rem;
-  padding: 0.55rem;
-  position: absolute;
-  text-align: left;
-  top: calc(100% + 0.45rem);
-  z-index: 70;
-}
-
-.menu-dropdown.open .menu-panel,
-.menu-dropdown:hover .menu-panel,
-.menu-dropdown:focus-within .menu-panel {
-  display: flex;
-}
-
-.menu-link {
-  border-radius: 0.55rem;
 }
 
 .floating-controls {
@@ -224,7 +171,7 @@ h1 {
 .switch-group {
   align-items: center;
   backdrop-filter: blur(8px);
-  background: color-mix(in srgb, var(--panel) 92%, transparent);
+  background: var(--panel);
   border: 1px solid var(--border);
   border-radius: 999px;
   box-shadow: var(--shadow-soft);
@@ -260,7 +207,11 @@ h1 {
 }
 
 .switch-btn:hover {
-  background: color-mix(in srgb, var(--active-bg) 12%, transparent);
+  background: rgba(0, 0, 0, 0.08);
+}
+
+:root[data-theme="dark"] .switch-btn:hover {
+  background: rgba(255, 255, 255, 0.14);
 }
 
 .switch-btn.active {
@@ -271,10 +222,6 @@ h1 {
 @media (max-width: 900px) {
   .top-banner {
     top: 3.8rem;
-  }
-
-  .menu-panel {
-    min-width: 13rem;
   }
 }
 
@@ -306,9 +253,7 @@ h1 {
     top: 3.2rem;
   }
 
-  .tab-link,
-  .menu-trigger,
-  .menu-link {
+  .tab-link {
     font-size: 0.72rem;
     min-height: 1.85rem;
     padding: 0.36rem 0.58rem;

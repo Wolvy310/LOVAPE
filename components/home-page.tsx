@@ -5,21 +5,21 @@ import { useEffect, useState } from "react";
 type Language = "fr" | "en";
 type Theme = "dark" | "light";
 
-const tabs = [
-  "E-liquides",
-  "E-cigarrettes",
-  "Do it yourself",
-  "Accessoires",
-  "Conseils",
-  "Faq",
-  "\u00c0 propos de Lovape"
-] as const;
-
 const content = {
   fr: {
     title: "LOVAPE",
     qualityTitle: "E-liquides Fran\u00e7ais de qualit\u00e9s et vape responsable",
     subtitle: "Bien vaper - mieux vaper",
+    navigationLabel: "Navigation principale",
+    tabs: [
+      "E-liquides",
+      "E-cigarrettes",
+      "Do it yourself",
+      "Accessoires",
+      "Conseils",
+      "Faq",
+      "\u00c0 propos de Lovape"
+    ],
     controls: {
       language: "Langue",
       theme: "Theme",
@@ -29,8 +29,18 @@ const content = {
   },
   en: {
     title: "LOVAPE",
-    qualityTitle: "E-liquides Fran\u00e7ais de qualit\u00e9s et vape responsable",
+    qualityTitle: "French quality e-liquids and responsible vaping",
     subtitle: "Vape well - vape better",
+    navigationLabel: "Main navigation",
+    tabs: [
+      "E-liquids",
+      "E-cigarettes",
+      "Do it yourself",
+      "Accessories",
+      "Advice",
+      "FAQ",
+      "About Lovape"
+    ],
     controls: {
       language: "Language",
       theme: "Theme",
@@ -43,7 +53,6 @@ const content = {
 export function HomePage() {
   const [language, setLanguage] = useState<Language>("fr");
   const [theme, setTheme] = useState<Theme>("dark");
-  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     try {
@@ -82,7 +91,6 @@ export function HomePage() {
   }, [theme]);
 
   const copy = content[language];
-  const menuId = "lovape-menu-panel";
 
   return (
     <main className="home-page">
@@ -93,43 +101,9 @@ export function HomePage() {
       </div>
 
       <header className="top-banner">
-        <div
-          className={`menu-dropdown ${menuOpen ? "open" : ""}`}
-          onMouseEnter={() => setMenuOpen(true)}
-          onMouseLeave={() => setMenuOpen(false)}
-          onFocusCapture={() => setMenuOpen(true)}
-          onBlurCapture={(event) => {
-            if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
-              setMenuOpen(false);
-            }
-          }}
-        >
-          <button
-            type="button"
-            className="menu-trigger"
-            aria-haspopup="menu"
-            aria-expanded={menuOpen}
-            aria-controls={menuId}
-            onClick={() => setMenuOpen((previous) => !previous)}
-          >
-            Menu
-          </button>
-          <nav id={menuId} className="menu-panel" aria-label="Menu complet">
-            <ul>
-              {tabs.map((tab) => (
-                <li key={`menu-${tab}`}>
-                  <a href="#" className="menu-link">
-                    {tab}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        </div>
-
-        <nav className="top-tabs" aria-label="Navigation principale">
+        <nav className="top-tabs" aria-label={copy.navigationLabel}>
           <ul>
-            {tabs.map((tab) => (
+            {copy.tabs.map((tab) => (
               <li key={tab}>
                 <a href="#" className="tab-link">
                   {tab}
