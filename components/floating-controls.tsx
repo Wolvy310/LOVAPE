@@ -1,13 +1,7 @@
-import { Language, Theme } from "@/lib/site-preferences";
-
-type ControlsLabels = {
-  language: string;
-  theme: string;
-  dark: string;
-  light: string;
-};
+import type { ControlsLabels, Language, Theme } from "@/lib/content";
 
 type FloatingControlsProps = {
+  ariaLabel: string;
   labels: ControlsLabels;
   language: Language;
   setLanguage: (language: Language) => void;
@@ -16,6 +10,7 @@ type FloatingControlsProps = {
 };
 
 export function FloatingControls({
+  ariaLabel,
   labels,
   language,
   setLanguage,
@@ -23,7 +18,7 @@ export function FloatingControls({
   setTheme
 }: FloatingControlsProps) {
   return (
-    <div className="floating-controls" aria-label="Parametres d'affichage">
+    <div className="floating-controls" aria-label={ariaLabel}>
       <div className="controls">
         <div className="switch-group">
           <span>{labels.language}</span>
@@ -62,4 +57,3 @@ export function FloatingControls({
     </div>
   );
 }
-

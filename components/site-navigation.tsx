@@ -1,9 +1,5 @@
 import Link from "next/link";
-
-export type NavTab = {
-  label: string;
-  href: string;
-};
+import type { NavTab } from "@/lib/content";
 
 type SiteNavigationProps = {
   ariaLabel: string;
@@ -17,13 +13,23 @@ export function SiteNavigation({ ariaLabel, tabs, activeHref }: SiteNavigationPr
       <nav className="top-tabs" aria-label={ariaLabel}>
         <ul>
           {tabs.map((tab) => {
-            const isActive = activeHref !== undefined && tab.href === activeHref;
+            const isActive = activeHref !== undefined && tab.href === activeHref && !tab.disabled;
             const className = `tab-link ${isActive ? "active-tab" : ""}`;
+
+            if (tab.disabled || !tab.href) {
+              return (
+                <li key={tab.key}>
+                  <span className={`${className} tab-disabled`} aria-disabled="true">
+                    {tab.label}
+                  </span>
+                </li>
+              );
+            }
 
             if (tab.href.startsWith("/")) {
               return (
-                <li key={tab.label}>
-                  <Link href={tab.href} className={className}>
+                <li key={tab.key}>
+                  <Link href={tab.href} className={className} aria-current={isActive ? "page" : undefined}>
                     {tab.label}
                   </Link>
                 </li>
@@ -31,8 +37,8 @@ export function SiteNavigation({ ariaLabel, tabs, activeHref }: SiteNavigationPr
             }
 
             return (
-              <li key={tab.label}>
-                <a href={tab.href} className={className}>
+              <li key={tab.key}>
+                <a href={tab.href} className={className} aria-current={isActive ? "page" : undefined}>
                   {tab.label}
                 </a>
               </li>
@@ -43,4 +49,3 @@ export function SiteNavigation({ ariaLabel, tabs, activeHref }: SiteNavigationPr
     </header>
   );
 }
-

@@ -2,70 +2,20 @@
 
 import Link from "next/link";
 import { FloatingControls } from "@/components/floating-controls";
-import { NavTab, SiteNavigation } from "@/components/site-navigation";
+import { manufacturers, siteContent } from "@/lib/content";
+import { SiteNavigation } from "@/components/site-navigation";
 import { useSitePreferences } from "@/lib/site-preferences";
-
-const manufacturers = [
-  { name: "V\u00e9g\u00e9tol", logo: "/logos/vegetol.svg" },
-  { name: "VDLV" },
-  { name: "Terroir et Vapeur" },
-  { name: "Curieux" },
-  { name: "Le French Liquide" },
-  { name: "Savourea", logo: "/logos/savourea.svg", fit: "contain" as const, frame: "square" as const },
-  { name: "Alfaliquid", logo: "/logos/alfaliquid.svg", fit: "contain" as const }
-] as const;
-
-const content = {
-  fr: {
-    title: "Fabricants",
-    navigationLabel: "Navigation principale",
-    tabs: [
-      { label: "E-liquides", href: "/e-liquides" },
-      { label: "E-cigarrettes", href: "#" },
-      { label: "Do it yourself", href: "#" },
-      { label: "Accessoires", href: "#" },
-      { label: "Conseils", href: "#" },
-      { label: "Faq", href: "#" },
-      { label: "\u00c0 propos de Lovape", href: "#" }
-    ] satisfies NavTab[],
-    controls: {
-      language: "Langue",
-      theme: "Theme",
-      dark: "Sombre",
-      light: "Clair"
-    }
-  },
-  en: {
-    title: "Manufacturers",
-    navigationLabel: "Main navigation",
-    tabs: [
-      { label: "E-liquids", href: "/e-liquides" },
-      { label: "E-cigarettes", href: "#" },
-      { label: "Do it yourself", href: "#" },
-      { label: "Accessories", href: "#" },
-      { label: "Advice", href: "#" },
-      { label: "FAQ", href: "#" },
-      { label: "About Lovape", href: "#" }
-    ] satisfies NavTab[],
-    controls: {
-      language: "Language",
-      theme: "Theme",
-      dark: "Dark",
-      light: "Light"
-    }
-  }
-} as const;
 
 export function FabricantsPage() {
   const { language, setLanguage, theme, setTheme } = useSitePreferences();
-  const copy = content[language];
+  const copy = siteContent[language].fabricants;
 
   return (
     <main className="home-page">
       <div className="hero-content">
         <h1>
-          <Link href="/" className="brand-link" aria-label="Retour a l'accueil">
-            LOVAPE
+          <Link href="/" className="brand-link" aria-label={copy.brandHomeAria}>
+            {copy.brand}
           </Link>
         </h1>
         <h2 className="section-title">{copy.title}</h2>
@@ -79,13 +29,13 @@ export function FabricantsPage() {
             <button key={brand.name} type="button" className="brand-card brand-card-button">
               {brand.logo ? (
                 <span
-                  className={`brand-logo-frame ${brand.frame === "square" ? "brand-logo-frame-square" : ""}`}
+                  className={`brand-logo-frame ${brand.logo.frame === "square" ? "brand-logo-frame-square" : ""}`}
                   aria-hidden="true"
                 >
                   <img
-                    src={brand.logo}
+                    src={brand.logo.src}
                     alt=""
-                    className={`brand-logo-fill ${brand.fit === "contain" ? "brand-logo-contain" : ""}`}
+                    className={`brand-logo-fill ${brand.logo.fit === "contain" ? "brand-logo-contain" : ""}`}
                     loading="lazy"
                     decoding="async"
                   />
@@ -98,6 +48,7 @@ export function FabricantsPage() {
       </section>
 
       <FloatingControls
+        ariaLabel={copy.controls.ariaLabel}
         labels={copy.controls}
         language={language}
         setLanguage={setLanguage}

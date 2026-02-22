@@ -1,9 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
-export type Language = "fr" | "en";
-export type Theme = "dark" | "light";
+import type { Language, Theme } from "@/lib/content";
 
 export function useSitePreferences() {
   const [language, setLanguage] = useState<Language>("fr");
@@ -47,4 +45,3 @@ export function useSitePreferences() {
 
   return { language, setLanguage, theme, setTheme };
 }
-

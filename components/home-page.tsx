@@ -2,65 +2,20 @@
 
 import Link from "next/link";
 import { FloatingControls } from "@/components/floating-controls";
-import { NavTab, SiteNavigation } from "@/components/site-navigation";
+import { SiteNavigation } from "@/components/site-navigation";
+import { siteContent } from "@/lib/content";
 import { useSitePreferences } from "@/lib/site-preferences";
-
-const content = {
-  fr: {
-    title: "LOVAPE",
-    qualityTitle: "E-liquides Fran\u00e7ais de qualit\u00e9s et vape responsable",
-    subtitle: "Bien vaper - mieux vaper",
-    navigationLabel: "Navigation principale",
-    tabs: [
-      { label: "E-liquides", href: "/e-liquides" },
-      { label: "E-cigarrettes", href: "#" },
-      { label: "Do it yourself", href: "#" },
-      { label: "Accessoires", href: "#" },
-      { label: "Conseils", href: "#" },
-      { label: "Faq", href: "#" },
-      { label: "\u00c0 propos de Lovape", href: "#" }
-    ] satisfies NavTab[],
-    controls: {
-      language: "Langue",
-      theme: "Theme",
-      dark: "Sombre",
-      light: "Clair"
-    }
-  },
-  en: {
-    title: "LOVAPE",
-    qualityTitle: "French quality e-liquids and responsible vaping",
-    subtitle: "Vape well - vape better",
-    navigationLabel: "Main navigation",
-    tabs: [
-      { label: "E-liquids", href: "/e-liquides" },
-      { label: "E-cigarettes", href: "#" },
-      { label: "Do it yourself", href: "#" },
-      { label: "Accessories", href: "#" },
-      { label: "Advice", href: "#" },
-      { label: "FAQ", href: "#" },
-      { label: "About Lovape", href: "#" }
-    ] satisfies NavTab[],
-    controls: {
-      language: "Language",
-      theme: "Theme",
-      dark: "Dark",
-      light: "Light"
-    }
-  }
-} as const;
 
 export function HomePage() {
   const { language, setLanguage, theme, setTheme } = useSitePreferences();
-
-  const copy = content[language];
+  const copy = siteContent[language].home;
 
   return (
     <main className="home-page">
       <div className="hero-content">
         <h1>
-          <Link href="/" className="brand-link" aria-label="Retour a l'accueil">
-            {copy.title}
+          <Link href="/" className="brand-link" aria-label={copy.brandHomeAria}>
+            {copy.brand}
           </Link>
         </h1>
         <p className="subtitle">{copy.subtitle}</p>
@@ -70,6 +25,7 @@ export function HomePage() {
       <SiteNavigation ariaLabel={copy.navigationLabel} tabs={copy.tabs} />
 
       <FloatingControls
+        ariaLabel={copy.controls.ariaLabel}
         labels={copy.controls}
         language={language}
         setLanguage={setLanguage}
