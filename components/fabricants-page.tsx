@@ -6,13 +6,13 @@ import { NavTab, SiteNavigation } from "@/components/site-navigation";
 import { useSitePreferences } from "@/lib/site-preferences";
 
 const manufacturers = [
-  { name: "V\u00e9g\u00e9tol" },
+  { name: "V\u00e9g\u00e9tol", logo: "/logos/vegetol.svg" },
   { name: "VDLV" },
   { name: "Terroir et Vapeur" },
   { name: "Curieux" },
   { name: "Le French Liquide" },
-  { name: "Savourea" },
-  { name: "Alfaliquid" }
+  { name: "Savourea", logo: "/logos/savourea.svg", fit: "contain" as const, frame: "square" as const },
+  { name: "Alfaliquid", logo: "/logos/alfaliquid.svg", fit: "contain" as const }
 ] as const;
 
 const content = {
@@ -77,6 +77,20 @@ export function FabricantsPage() {
         <div className="brand-grid">
           {manufacturers.map((brand) => (
             <button key={brand.name} type="button" className="brand-card brand-card-button">
+              {brand.logo ? (
+                <span
+                  className={`brand-logo-frame ${brand.frame === "square" ? "brand-logo-frame-square" : ""}`}
+                  aria-hidden="true"
+                >
+                  <img
+                    src={brand.logo}
+                    alt=""
+                    className={`brand-logo-fill ${brand.fit === "contain" ? "brand-logo-contain" : ""}`}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </span>
+              ) : null}
               <h3>{brand.name}</h3>
             </button>
           ))}
