@@ -8,4 +8,4 @@ yarn-error.log*
 pnpm-debug.log*
 coverage
 .DS_Store
-
+*.tsbuildinfo

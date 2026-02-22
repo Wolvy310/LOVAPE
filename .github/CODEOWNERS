@@ -1,0 +1,8 @@
+# Default owner for all files
+* @Wolvy310
+
+# Critical zones
+app/** @Wolvy310
+components/** @Wolvy310
+lib/** @Wolvy310
+.github/** @Wolvy310
