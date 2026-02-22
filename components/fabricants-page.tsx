@@ -5,11 +5,19 @@ import { FloatingControls } from "@/components/floating-controls";
 import { NavTab, SiteNavigation } from "@/components/site-navigation";
 import { useSitePreferences } from "@/lib/site-preferences";
 
+const manufacturers = [
+  { name: "V\u00e9g\u00e9tol" },
+  { name: "VDLV" },
+  { name: "Terroir et Vapeur" },
+  { name: "Curieux" },
+  { name: "Le French Liquide" },
+  { name: "Savourea" },
+  { name: "Alfaliquid" }
+] as const;
+
 const content = {
   fr: {
-    title: "LOVAPE",
-    qualityTitle: "E-liquides Fran\u00e7ais de qualit\u00e9s et vape responsable",
-    subtitle: "Bien vaper - mieux vaper",
+    title: "Fabricants",
     navigationLabel: "Navigation principale",
     tabs: [
       { label: "E-liquides", href: "/e-liquides" },
@@ -28,9 +36,7 @@ const content = {
     }
   },
   en: {
-    title: "LOVAPE",
-    qualityTitle: "French quality e-liquids and responsible vaping",
-    subtitle: "Vape well - vape better",
+    title: "Manufacturers",
     navigationLabel: "Main navigation",
     tabs: [
       { label: "E-liquids", href: "/e-liquides" },
@@ -50,9 +56,8 @@ const content = {
   }
 } as const;
 
-export function HomePage() {
+export function FabricantsPage() {
   const { language, setLanguage, theme, setTheme } = useSitePreferences();
-
   const copy = content[language];
 
   return (
@@ -60,14 +65,23 @@ export function HomePage() {
       <div className="hero-content">
         <h1>
           <Link href="/" className="brand-link" aria-label="Retour a l'accueil">
-            {copy.title}
+            LOVAPE
           </Link>
         </h1>
-        <p className="subtitle">{copy.subtitle}</p>
-        <h2 className="quality-title">{copy.qualityTitle}</h2>
+        <h2 className="section-title">{copy.title}</h2>
       </div>
 
-      <SiteNavigation ariaLabel={copy.navigationLabel} tabs={copy.tabs} />
+      <SiteNavigation ariaLabel={copy.navigationLabel} tabs={copy.tabs} activeHref="/e-liquides" />
+
+      <section className="cards-section" aria-label={copy.title}>
+        <div className="brand-grid">
+          {manufacturers.map((brand) => (
+            <button key={brand.name} type="button" className="brand-card brand-card-button">
+              <h3>{brand.name}</h3>
+            </button>
+          ))}
+        </div>
+      </section>
 
       <FloatingControls
         labels={copy.controls}
