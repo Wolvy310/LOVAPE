@@ -1,7 +1,0 @@
-<svg width="125" height="100" viewBox="0 0 125 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Vegetol">
-  <rect width="125" height="100" fill="#FFFFFF"/>
-  <path d="M20 10 C31 10 40 15 48 25 L69 52 C72 56 72 62 69 66 L57 80 C54 84 48 84 45 80 L6 23 C2 18 6 10 14 10H20Z" fill="#1E64B4"/>
-  <path d="M86 10 C93 10 97 18 93 23 L70 65 C66 72 56 72 52 65 L45 53 L67 22 C72 15 78 10 86 10Z" fill="#9ABBE5"/>
-  <circle cx="107" cy="76" r="13" fill="#1E64B4"/>
-</svg>
-
