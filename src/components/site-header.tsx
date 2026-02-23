@@ -16,6 +16,9 @@ export function SiteHeader() {
           <Link href="/catalog/materiel-mtl" className="text-muted-foreground hover:text-foreground">
             Materiel MTL
           </Link>
+          <Link href="/configurateur/mod-clearo" className="text-muted-foreground hover:text-foreground">
+            Configurateur
+          </Link>
           <Link href="/guide" className="text-muted-foreground hover:text-foreground">
             Guide
           </Link>

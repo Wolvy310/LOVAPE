@@ -79,6 +79,12 @@ export default async function ProductPage({ params }: ProductPageProps) {
   const specs = getProductSpecs(product);
   const isAvailable = product.stockPolicy === "INFINITE" || product.stockQty > 0;
   const catalogPath = product.family === "E_LIQUID" ? "/catalog/e-liquides" : "/catalog/materiel-mtl";
+  const configuratorHref =
+    product.type === "MTL_MOD"
+      ? `/configurateur/mod-clearo?mod=${encodeURIComponent(product.slug)}`
+      : product.type === "MTL_CLEAROMIZER"
+        ? `/configurateur/mod-clearo?clearo=${encodeURIComponent(product.slug)}`
+        : "/configurateur/mod-clearo";
 
   return (
     <div className="container space-y-6 py-10">
@@ -135,6 +141,11 @@ export default async function ProductPage({ params }: ProductPageProps) {
               <Link href="/checkout/request" className={buttonVariants({ variant: "secondary" })}>
                 Demande de commande
               </Link>
+              {product.family === "MTL_MATERIAL" ? (
+                <Link href={configuratorHref} className={buttonVariants({ variant: "secondary" })}>
+                  Ouvrir configurateur MTL
+                </Link>
+              ) : null}
               <Link href={catalogPath} className={buttonVariants({ variant: "secondary" })}>
                 Retour au catalogue
               </Link>

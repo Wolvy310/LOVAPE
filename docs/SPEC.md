@@ -68,15 +68,16 @@ Le MVP est centre sur la prise de commande (Order Request) sans paiement en lign
 3. Catalogue:
    - E-liquides (marques autorisees)
    - Materiel MTL (mods + clearomiseurs)
-4. Listing avec filtres, tri, pagination, etats vide/chargement/erreur.
-5. Fiche produit avec caracteristiques structurees + avertissements.
-6. Panier localStorage.
-7. Checkout request:
+4. Configurateur Mod + Clearomiseur avec checks de compatibilite MTL.
+5. Listing avec filtres, tri, pagination, etats vide/chargement/erreur.
+6. Fiche produit avec caracteristiques structurees + avertissements.
+7. Panier localStorage.
+8. Checkout request:
    - creation commande en DB avec statut `REQUESTED`
    - provider email abstrait (desactive par defaut, mode console en dev)
-8. Pages info: Livraison, Retours, Contact/SAV.
-9. Pages legales: Mentions, CGV (template + TODO), Confidentialite, Cookies.
-10. Guide separe: lexique + contenus de bon usage non medical.
+9. Pages info: Livraison, Retours, Contact/SAV.
+10. Pages legales: Mentions, CGV (template + TODO), Confidentialite, Cookies.
+11. Guide separe: lexique + contenus de bon usage non medical.
 
 ### Admin
 1. Auth admin minimale.
@@ -154,3 +155,15 @@ Voir `docs/TODO.md` pour les infos manquantes bloquees par decisions metier.
 4. Exports admin operationnels via API:
    - commandes CSV
    - consent logs CSV.
+
+## 15) Etat implementation Step E
+1. Configurateur Mod + Clearomiseur operationnel:
+   - route publique `/configurateur/mod-clearo`
+   - selection de produits materiel MTL
+   - ajout individuel ou en configuration complete au panier
+2. Moteur de compatibilite MTL implemente dans `src/lib/compat.ts`:
+   - verification type produit (`MTL_MOD` + `MTL_CLEAROMIZER`)
+   - verification connecteur
+   - verification plage de puissance commune
+   - verification plage de resistance commune.
+3. Tests unitaires de compatibilite ajoutes et couverts.

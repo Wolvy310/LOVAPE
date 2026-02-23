@@ -13,6 +13,7 @@
 | GET | `/age-gate` | Public | Verification age (date de naissance) |
 | GET | `/catalog/e-liquides` | Public | Listing e-liquides + filtres/tri/pagination |
 | GET | `/catalog/materiel-mtl` | Public | Listing materiel MTL + filtres/tri/pagination |
+| GET | `/configurateur/mod-clearo` | Public | Configurateur Mod + Clearomiseur avec verification de compatibilite |
 | GET | `/product/[slug]` | Public | Fiche produit detaillee |
 | GET | `/cart` | Public | Panier localStorage |
 | GET | `/checkout/request` | Public | Formulaire demande de commande |
@@ -124,3 +125,11 @@
 5. Auth admin temporaire API Step D:
    - header requis `x-admin-password: <ADMIN_PASSWORD>`
    - auth middleware/session complete prevue Step G.
+
+## 10) Notes implementation Step E
+1. Configurateur public operationnel:
+   - `/configurateur/mod-clearo`
+2. Le configurateur verifie la compatibilite Mod + Clearomiseur sur:
+   - connecteur
+   - plage de puissance commune
+   - plage de resistance commune.

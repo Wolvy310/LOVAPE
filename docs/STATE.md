@@ -1,91 +1,68 @@
-# LOVAPE - STATE (Etape D)
+# LOVAPE - STATE (Etape E)
 
 ## Etape en cours
-- Etape D terminee: panier + checkout request + commandes DB + exports admin API.
+- Etape E terminee: configurateur Mod + Clearomiseur et regles de compatibilite MTL.
 
 ## Faits realises
-1. Panier localStorage operationnel:
-   - ajout depuis listing et fiche produit
-   - edition quantite
-   - suppression item
-   - vidage panier
-2. Navigation panier visible dans le header (`Panier (n)`).
-3. Page panier publique operationnelle:
-   - `/cart`
-   - recap quantites, total, CTA checkout.
-4. Checkout request operationnel:
-   - formulaire client `/checkout/request`
-   - validations front de base
-   - recap panier avant envoi.
-5. Backend checkout operationnel:
-   - `POST /api/checkout/request`
-   - validation Zod
-   - creation `Order` + `OrderItem` en DB avec statut `REQUESTED`
-   - generation `orderRef`
-   - confirmation `/checkout/confirmation/[orderRef]`.
-6. EmailProvider integre:
-   - mode `console` actif (`EMAIL_PROVIDER=console`)
-   - mode desactive possible.
-7. API admin commandes et exports operationnels:
-   - `GET /api/admin/orders`
-   - `GET /api/admin/orders/[id]`
-   - `PATCH /api/admin/orders/[id]/status`
-   - `GET /api/admin/orders/export.csv`
-   - `GET /api/admin/consents/export.csv`
-8. Auth admin API temporaire implementee:
-   - header `x-admin-password` compare a `ADMIN_PASSWORD`.
-9. Couche utilitaires ajoutee:
-   - stockage panier (`src/lib/cart-storage.ts`)
-   - validation commande (`src/server/order-request.ts`)
-   - generation CSV (`src/server/csv.ts`).
-10. Memoire externe synchronisee:
-   - `docs/ROUTES.md`
+1. Moteur de compatibilite MTL implemente dans `src/lib/compat.ts`:
+   - validation de selection (`mod` + `clearomiseur`)
+   - verification type produit (`MTL_MOD`, `MTL_CLEAROMIZER`)
+   - verification connecteur
+   - verification plage de puissance commune
+   - verification plage de resistance commune.
+2. Resultat de compatibilite enrichi:
+   - statut `compatible`
+   - `reason` actionnable
+   - plage partagee puissance/resistance quand valide.
+3. Configurateur public operationnel:
+   - route `GET /configurateur/mod-clearo`
+   - selection mod + clearomiseur
+   - feedback immediat compatible/incompatible.
+4. Actions panier depuis le configurateur:
+   - ajout du mod seul
+   - ajout du clearomiseur seul
+   - ajout de la configuration complete en un clic.
+5. Navigation et parcours mis a jour:
+   - lien `Configurateur` dans le header
+   - CTA home vers le configurateur
+   - lien depuis fiche produit materiel MTL (preselection par query param).
+6. Documentation synchronisee:
    - `docs/SPEC.md`
-   - `docs/STATE.md`
+   - `docs/ROUTES.md`
+   - `docs/UX_FLOWS.md`
+   - `docs/STATE.md`.
+7. Tests unitaires de compatibilite etendus:
+   - selection incomplete
+   - cas compatible
+   - connecteur incompatible
+   - puissance incompatible
+   - resistance incompatible
+   - ordre de produits invalide.
 
-## Fichiers touches (Etape D)
-1. `src/components/site-header.tsx`
-2. `src/components/catalog/catalog-product-card.tsx`
-3. `src/app/product/[slug]/page.tsx`
-4. `src/app/cart/page.tsx`
-5. `src/components/cart/add-to-cart-button.tsx`
-6. `src/components/cart/cart-link.tsx`
-7. `src/components/cart/cart-page-client.tsx`
-8. `src/app/checkout/request/page.tsx`
-9. `src/components/checkout/checkout-request-client.tsx`
-10. `src/app/checkout/confirmation/[orderRef]/page.tsx`
-11. `src/app/api/checkout/request/route.ts`
-12. `src/app/api/admin/orders/route.ts`
-13. `src/app/api/admin/orders/[id]/route.ts`
-14. `src/app/api/admin/orders/[id]/status/route.ts`
-15. `src/app/api/admin/orders/export.csv/route.ts`
-16. `src/app/api/admin/consents/export.csv/route.ts`
-17. `src/lib/cart-types.ts`
-18. `src/lib/cart-mappers.ts`
-19. `src/lib/cart-storage.ts`
-20. `src/server/order-request.ts`
-21. `src/server/email-provider.ts`
-22. `src/server/admin-request.ts`
-23. `src/server/csv.ts`
-24. `tests/unit/cart-storage.test.ts`
-25. `tests/unit/order-request.test.ts`
-26. `docs/ROUTES.md`
-27. `docs/SPEC.md`
-28. `docs/STATE.md`
+## Fichiers touches (Etape E)
+1. `src/lib/compat.ts`
+2. `tests/unit/compat.test.ts`
+3. `src/components/configurator/mod-clearo-configurator.tsx`
+4. `src/app/configurateur/mod-clearo/page.tsx`
+5. `src/components/site-header.tsx`
+6. `src/app/page.tsx`
+7. `src/app/product/[slug]/page.tsx`
+8. `docs/ROUTES.md`
+9. `docs/SPEC.md`
+10. `docs/UX_FLOWS.md`
+11. `docs/STATE.md`
 
 ## Commandes de verification executees (non interactif)
 1. `npm run lint` -> OK
 2. `npm run typecheck` -> OK
-3. `npm test` -> OK (19 tests)
+3. `npm test` -> OK (24 tests)
 4. `npm run build:guard` -> OK
 
 ## Risques / points a surveiller
-1. Les routes admin utilisent une auth temporaire par header; l auth complete middleware/session arrive en Step G.
-2. Le checkout requiert une DB reachable (`DATABASE_URL`) pour fonctionnement runtime.
-3. Le panier est localStorage navigateur uniquement (normal pour MVP).
+1. Les regles de compatibilite reposent sur les specs catalogue; des donnees incompletes rendront une paire incompatible.
+2. Le configurateur reste sur donnees catalogue seed/static MVP (pas encore branche sur admin CRUD runtime).
+3. Les routes admin utilisent toujours une auth temporaire par header; l auth complete middleware/session arrive en Step G.
 
 ## Prochaine etape
-- Etape E:
-  - configurateur Mod + Clearo
-  - regles de compatibilite dans `src/lib/compat.ts`
-  - tests unitaires associes.
+- Etape F:
+  - enrichissement du guide public (lexique + contenus non medicaux + parcours debutant).

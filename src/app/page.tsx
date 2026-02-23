@@ -24,6 +24,9 @@ export default function HomePage() {
             <Link href="/catalog/materiel-mtl" className={buttonVariants({ variant: "secondary" })}>
               Voir le materiel MTL
             </Link>
+            <Link href="/configurateur/mod-clearo" className={buttonVariants({ variant: "secondary" })}>
+              Configurer un setup
+            </Link>
           </div>
         </div>
         <div className="space-y-3 rounded-xl border border-border bg-secondary/40 p-5">

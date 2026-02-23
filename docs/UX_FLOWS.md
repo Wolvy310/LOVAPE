@@ -58,6 +58,18 @@
    - page claire "quoi faire ensuite"
    - delai de reponse SAV annonce.
 
+### Etape E: Configurateur Mod + Clearomiseur
+1. Visiteur ouvre `/configurateur/mod-clearo`.
+2. Selection d un mod MTL et d un clearomiseur MTL.
+3. Verification immediate de compatibilite:
+   - connecteur identique
+   - plage de puissance commune
+   - plage de resistance commune
+4. Si compatible:
+   - ajout mod + clearomiseur possible en un clic vers panier.
+5. Si incompatible:
+   - message explicite et action corrective (changer mod ou clearomiseur).
+
 ## 3) Flow admin: Ajout produit conforme
 ### Etape A: Auth
 1. Admin va sur `/admin/login`.
