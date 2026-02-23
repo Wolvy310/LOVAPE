@@ -7,5 +7,176 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// Step B will add full models and constraints from docs/DATA_MODEL.md.
+enum CategoryFamily {
+  E_LIQUID
+  MTL_MATERIAL
+}
 
+enum ProductType {
+  E_LIQUID
+  MTL_MOD
+  MTL_CLEAROMIZER
+}
+
+enum ProductStatus {
+  DRAFT
+  ACTIVE
+  ARCHIVED
+}
+
+enum StockPolicy {
+  FINITE
+  INFINITE
+}
+
+enum OrderStatus {
+  REQUESTED
+  REVIEWING
+  CONFIRMED
+  CANCELLED
+}
+
+enum ConsentScope {
+  NECESSARY
+  ANALYTICS
+}
+
+enum ConsentDecision {
+  ACCEPTED
+  REJECTED
+}
+
+model Brand {
+  id        String    @id @default(cuid())
+  name      String    @unique
+  slug      String    @unique
+  isActive  Boolean   @default(true)
+  products  Product[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@map("brands")
+}
+
+model Category {
+  id          String         @id @default(cuid())
+  name        String
+  slug        String         @unique
+  family      CategoryFamily
+  description String?
+  isActive    Boolean        @default(true)
+  sortOrder   Int            @default(0)
+  products    Product[]
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  @@index([family, isActive, sortOrder])
+  @@map("categories")
+}
+
+model Product {
+  id                   String        @id @default(cuid())
+  sku                  String        @unique
+  slug                 String        @unique
+  name                 String
+  shortDescription     String
+  longDescription      String
+  type                 ProductType
+  status               ProductStatus @default(DRAFT)
+  brandId              String
+  categoryId           String
+  priceCents           Int
+  stockPolicy          StockPolicy   @default(FINITE)
+  stockQty             Int           @default(0)
+  tags                 String[]      @default([])
+  warningRequired      Boolean       @default(true)
+  imageUrl             String?
+  specJson             Json?
+  nicotineMg           Int?
+  pgRatio              Int?
+  vgRatio              Int?
+  volumeMl             Int?
+  recommendedPowerMinW Int?
+  recommendedPowerMaxW Int?
+  airflowStyle         String?
+  connectorType        String?
+  resistanceRange      String?
+  createdAt            DateTime      @default(now())
+  updatedAt            DateTime      @updatedAt
+  brand                Brand         @relation(fields: [brandId], references: [id], onDelete: Restrict)
+  category             Category      @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  orderItems           OrderItem[]
+
+  @@index([status, categoryId, updatedAt(sort: Desc)])
+  @@index([type, status])
+  @@map("products")
+}
+
+model Order {
+  id                String      @id @default(cuid())
+  orderRef          String      @unique
+  status            OrderStatus @default(REQUESTED)
+  customerFirstName String
+  customerLastName  String
+  customerEmail     String
+  customerPhone     String?
+  customerMessage   String?
+  legalAcceptedAt   DateTime
+  ageConfirmedAt    DateTime
+  analyticsConsentAt DateTime?
+  currency          String      @default("EUR")
+  totalCents        Int
+  items             OrderItem[]
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+
+  @@index([status, createdAt(sort: Desc)])
+  @@map("orders")
+}
+
+model OrderItem {
+  id                  String   @id @default(cuid())
+  orderId             String
+  productId           String?
+  productNameSnapshot String
+  skuSnapshot         String
+  unitPriceCents      Int
+  quantity            Int
+  lineTotalCents      Int
+  configJson          Json?
+  order               Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product             Product? @relation(fields: [productId], references: [id], onDelete: SetNull)
+
+  @@index([orderId])
+  @@index([productId])
+  @@map("order_items")
+}
+
+model ConsentLog {
+  id        String          @id @default(cuid())
+  scope     ConsentScope
+  decision  ConsentDecision
+  pagePath  String
+  requestId String
+  userAgent String?
+  ipHash    String?
+  userHash  String?
+  createdAt DateTime        @default(now())
+
+  @@index([scope, createdAt(sort: Desc)])
+  @@index([requestId])
+  @@map("consent_logs")
+}
+
+model AdminSession {
+  id        String   @id @default(cuid())
+  tokenHash String   @unique
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+  lastSeenAt DateTime?
+  ipHash    String?
+  userAgent String?
+
+  @@index([expiresAt])
+  @@map("admin_sessions")
+}

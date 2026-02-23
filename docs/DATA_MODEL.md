@@ -161,3 +161,25 @@ Objectif:
    - 5 a 10 e-liquides
    - 3 a 6 materiels MTL
 3. Zero pod/puff/jetable/disposable.
+
+## 8) Implementation Step B (etat reel)
+1. Schema Prisma implemente dans `prisma/schema.prisma` avec mappings SQL:
+   - `brands`
+   - `categories`
+   - `products`
+   - `orders`
+   - `order_items`
+   - `consent_logs`
+   - `admin_sessions`
+2. Migration initiale:
+   - `prisma/migrations/20260223153000_init/migration.sql`
+3. Contraintes SQL supplementaires appliquees:
+   - blocage termes pod/podmod/puff/jetable/disposable dans categories et produits
+   - `priceCents` et `stockQty` non negatifs
+   - bornes `pgRatio`/`vgRatio` entre 0 et 100
+   - coherence puissance min/max materiel MTL
+   - quantites et totaux de commande non negatifs
+4. Seed idempotent implemente dans `prisma/seed.ts`:
+   - 6 marques e-liquides autorisees
+   - 1 marque materiel neutre (`LovaTech`)
+   - 10 produits fictifs conformes (6 e-liquides, 4 materiels MTL)
