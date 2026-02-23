@@ -1,10 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { AddToCartButton } from "@/components/cart/add-to-cart-button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import type { CatalogProduct } from "@/lib/catalog-types";
 import { buttonVariants } from "@/components/ui/button";
+import { toCartItemInput } from "@/lib/cart-mappers";
 import { formatPriceEUR } from "@/lib/format";
 
 interface CatalogProductCardProps {
@@ -41,11 +43,14 @@ export function CatalogProductCard({ product }: CatalogProductCardProps) {
           ))}
         </div>
       </CardContent>
-      <CardFooter className="mt-auto flex items-center justify-between">
+      <CardFooter className="mt-auto flex flex-wrap items-center justify-between gap-2">
         <p className="font-semibold text-foreground">{formatPriceEUR(product.priceCents)}</p>
-        <Link href={`/product/${product.slug}`} className={buttonVariants({ variant: "secondary", size: "sm" })}>
-          Voir details
-        </Link>
+        <div className="flex items-center gap-2">
+          <AddToCartButton item={toCartItemInput(product)} variant="secondary" size="sm" label="Ajouter" />
+          <Link href={`/product/${product.slug}`} className={buttonVariants({ variant: "secondary", size: "sm" })}>
+            Voir details
+          </Link>
+        </div>
       </CardFooter>
     </Card>
   );

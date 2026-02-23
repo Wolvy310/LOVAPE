@@ -139,3 +139,18 @@ Voir `docs/TODO.md` pour les infos manquantes bloquees par decisions metier.
    - caracteristiques structurees
    - avertissements visibles
    - chemin vers demande de commande.
+
+## 14) Etat implementation Step D
+1. Panier localStorage operationnel:
+   - ajout depuis listing et fiche produit
+   - edition quantites/suppression/vidage
+2. Checkout request operationnel:
+   - formulaire client
+   - creation DB `Order` + `OrderItem` statut `REQUESTED`
+   - page confirmation avec `orderRef`
+3. Interface EmailProvider operationnelle:
+   - mode `console` actif par defaut
+   - mode desactive possible via `EMAIL_PROVIDER`
+4. Exports admin operationnels via API:
+   - commandes CSV
+   - consent logs CSV.

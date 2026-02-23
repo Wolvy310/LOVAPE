@@ -1,11 +1,13 @@
-import { PagePlaceholder } from "@/components/page-placeholder";
+import type { Metadata } from "next";
+
+import { CheckoutRequestClient } from "@/components/checkout/checkout-request-client";
+
+export const metadata: Metadata = {
+  title: "Demande de commande",
+  description: "Formulaire de prise de commande LOVAPE en mode request-first."
+};
 
 export default function CheckoutRequestPage() {
-  return (
-    <PagePlaceholder
-      title="Demande de commande"
-      description="Le formulaire de prise de commande REQUESTED sera implemente en Etape D."
-    />
-  );
+  return <CheckoutRequestClient />;
 }
 

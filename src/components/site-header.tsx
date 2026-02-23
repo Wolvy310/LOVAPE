@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+import { CartLink } from "@/components/cart/cart-link";
+
 export function SiteHeader() {
   return (
     <header className="border-b border-border bg-card/70 backdrop-blur">
@@ -17,6 +19,7 @@ export function SiteHeader() {
           <Link href="/guide" className="text-muted-foreground hover:text-foreground">
             Guide
           </Link>
+          <CartLink />
         </nav>
       </div>
     </header>

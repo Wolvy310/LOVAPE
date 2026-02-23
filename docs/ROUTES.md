@@ -106,3 +106,21 @@
    - loading (`loading.tsx`)
    - empty result
    - error boundary segment.
+
+## 9) Notes implementation Step D
+1. Panier localStorage operationnel:
+   - `/cart`
+2. Checkout request operationnel:
+   - `/checkout/request`
+   - `/checkout/confirmation/[orderRef]`
+   - `POST /api/checkout/request`
+3. Commandes admin operationnelles via API:
+   - `GET /api/admin/orders`
+   - `GET /api/admin/orders/[id]`
+   - `PATCH /api/admin/orders/[id]/status`
+   - `GET /api/admin/orders/export.csv`
+4. Export consent logs admin operationnel:
+   - `GET /api/admin/consents/export.csv`
+5. Auth admin temporaire API Step D:
+   - header requis `x-admin-password: <ADMIN_PASSWORD>`
+   - auth middleware/session complete prevue Step G.

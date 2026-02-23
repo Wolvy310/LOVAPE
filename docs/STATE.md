@@ -1,82 +1,91 @@
-# LOVAPE - STATE (Etape C)
+# LOVAPE - STATE (Etape D)
 
 ## Etape en cours
-- Etape C terminee: UI catalogue publique et fiches produit implementees.
+- Etape D terminee: panier + checkout request + commandes DB + exports admin API.
 
 ## Faits realises
-1. Couche catalogue front introduite:
-   - dataset catalogue mock conforme (`src/lib/catalog-data.ts`)
-   - types metier front (`src/lib/catalog-types.ts`)
-   - moteur filtres/tri/pagination (`src/lib/catalog-query.ts`)
-2. Pages catalogue implementees:
-   - `/catalog/e-liquides`
-   - `/catalog/materiel-mtl`
-3. Fonctionnalites catalogue actives:
-   - filtres (marque, nicotine/type, stock)
-   - tri (pertinence, prix, nom)
-   - pagination
-   - recherche texte
-4. Etats UI couverts:
-   - loading (`loading.tsx`)
-   - empty result (etat vide)
-   - error boundaries segment (`error.tsx`)
-5. Fiche produit publique implementee:
-   - `/product/[slug]`
-   - specs structurees (e-liquides / materiel MTL)
-   - avertissements legaux visibles
-   - CTA vers demande de commande
-6. Design system applique sur catalogue/produit:
-   - nouveaux composants `Badge`, cartes produit, pagination, formulaires filtres
-7. Tests unitaires ajoutes pour la logique catalogue:
-   - `tests/unit/catalog-query.test.ts`
-8. Memoire externe synchronisee:
+1. Panier localStorage operationnel:
+   - ajout depuis listing et fiche produit
+   - edition quantite
+   - suppression item
+   - vidage panier
+2. Navigation panier visible dans le header (`Panier (n)`).
+3. Page panier publique operationnelle:
+   - `/cart`
+   - recap quantites, total, CTA checkout.
+4. Checkout request operationnel:
+   - formulaire client `/checkout/request`
+   - validations front de base
+   - recap panier avant envoi.
+5. Backend checkout operationnel:
+   - `POST /api/checkout/request`
+   - validation Zod
+   - creation `Order` + `OrderItem` en DB avec statut `REQUESTED`
+   - generation `orderRef`
+   - confirmation `/checkout/confirmation/[orderRef]`.
+6. EmailProvider integre:
+   - mode `console` actif (`EMAIL_PROVIDER=console`)
+   - mode desactive possible.
+7. API admin commandes et exports operationnels:
+   - `GET /api/admin/orders`
+   - `GET /api/admin/orders/[id]`
+   - `PATCH /api/admin/orders/[id]/status`
+   - `GET /api/admin/orders/export.csv`
+   - `GET /api/admin/consents/export.csv`
+8. Auth admin API temporaire implementee:
+   - header `x-admin-password` compare a `ADMIN_PASSWORD`.
+9. Couche utilitaires ajoutee:
+   - stockage panier (`src/lib/cart-storage.ts`)
+   - validation commande (`src/server/order-request.ts`)
+   - generation CSV (`src/server/csv.ts`).
+10. Memoire externe synchronisee:
    - `docs/ROUTES.md`
    - `docs/SPEC.md`
-   - `docs/DESIGN_SYSTEM.md`
    - `docs/STATE.md`
 
-## Fichiers touches (Etape C)
-1. `src/lib/catalog-types.ts`
-2. `src/lib/catalog-data.ts`
-3. `src/lib/catalog-query.ts`
-4. `src/lib/format.ts`
-5. `src/components/ui/badge.tsx`
-6. `src/components/catalog/catalog-filter-form.tsx`
-7. `src/components/catalog/catalog-product-card.tsx`
-8. `src/components/catalog/catalog-pagination.tsx`
-9. `src/components/catalog/catalog-loading-grid.tsx`
-10. `src/components/catalog/catalog-empty-state.tsx`
-11. `src/components/catalog/catalog-page.tsx`
-12. `src/app/catalog/e-liquides/page.tsx`
-13. `src/app/catalog/e-liquides/loading.tsx`
-14. `src/app/catalog/e-liquides/error.tsx`
-15. `src/app/catalog/materiel-mtl/page.tsx`
-16. `src/app/catalog/materiel-mtl/loading.tsx`
-17. `src/app/catalog/materiel-mtl/error.tsx`
-18. `src/app/product/[slug]/page.tsx`
-19. `src/app/product/[slug]/loading.tsx`
-20. `src/app/product/[slug]/not-found.tsx`
-21. `src/app/product/[slug]/error.tsx`
-22. `src/app/dev/styleguide/page.tsx`
-23. `docs/ROUTES.md`
-24. `docs/SPEC.md`
-25. `docs/DESIGN_SYSTEM.md`
-26. `docs/STATE.md`
-27. `tests/unit/catalog-query.test.ts`
+## Fichiers touches (Etape D)
+1. `src/components/site-header.tsx`
+2. `src/components/catalog/catalog-product-card.tsx`
+3. `src/app/product/[slug]/page.tsx`
+4. `src/app/cart/page.tsx`
+5. `src/components/cart/add-to-cart-button.tsx`
+6. `src/components/cart/cart-link.tsx`
+7. `src/components/cart/cart-page-client.tsx`
+8. `src/app/checkout/request/page.tsx`
+9. `src/components/checkout/checkout-request-client.tsx`
+10. `src/app/checkout/confirmation/[orderRef]/page.tsx`
+11. `src/app/api/checkout/request/route.ts`
+12. `src/app/api/admin/orders/route.ts`
+13. `src/app/api/admin/orders/[id]/route.ts`
+14. `src/app/api/admin/orders/[id]/status/route.ts`
+15. `src/app/api/admin/orders/export.csv/route.ts`
+16. `src/app/api/admin/consents/export.csv/route.ts`
+17. `src/lib/cart-types.ts`
+18. `src/lib/cart-mappers.ts`
+19. `src/lib/cart-storage.ts`
+20. `src/server/order-request.ts`
+21. `src/server/email-provider.ts`
+22. `src/server/admin-request.ts`
+23. `src/server/csv.ts`
+24. `tests/unit/cart-storage.test.ts`
+25. `tests/unit/order-request.test.ts`
+26. `docs/ROUTES.md`
+27. `docs/SPEC.md`
+28. `docs/STATE.md`
 
 ## Commandes de verification executees (non interactif)
 1. `npm run lint` -> OK
 2. `npm run typecheck` -> OK
-3. `npm test` -> OK (12 tests)
+3. `npm test` -> OK (19 tests)
 4. `npm run build:guard` -> OK
 
 ## Risques / points a surveiller
-1. Le catalogue Step C repose sur un dataset mock; la connexion DB runtime arrive en Step D/G.
-2. Les routes API catalogue ne sont pas encore implementees.
-3. Le panier reste non branche (Step D).
+1. Les routes admin utilisent une auth temporaire par header; l auth complete middleware/session arrive en Step G.
+2. Le checkout requiert une DB reachable (`DATABASE_URL`) pour fonctionnement runtime.
+3. Le panier est localStorage navigateur uniquement (normal pour MVP).
 
 ## Prochaine etape
-- Etape D:
-  - panier localStorage
-  - checkout request vers DB (`Order`/`OrderItem`)
-  - page confirmation et parcours post-soumission.
+- Etape E:
+  - configurateur Mod + Clearo
+  - regles de compatibilite dans `src/lib/compat.ts`
+  - tests unitaires associes.

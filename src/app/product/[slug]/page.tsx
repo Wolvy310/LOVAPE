@@ -3,11 +3,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { AddToCartButton } from "@/components/cart/add-to-cart-button";
 import { Alert } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getAllCatalogProducts, getCatalogProductBySlug } from "@/lib/catalog-data";
+import { toCartItemInput } from "@/lib/cart-mappers";
 import { formatPriceEUR } from "@/lib/format";
 import type { CatalogProduct } from "@/lib/catalog-types";
 
@@ -126,7 +128,11 @@ export default async function ProductPage({ params }: ProductPageProps) {
               ))}
             </div>
             <div className="flex flex-wrap gap-2">
-              <Link href="/checkout/request" className={buttonVariants({ variant: "default" })}>
+              <AddToCartButton item={toCartItemInput(product)} label="Ajouter au panier" />
+              <Link href="/cart" className={buttonVariants({ variant: "default" })}>
+                Voir panier
+              </Link>
+              <Link href="/checkout/request" className={buttonVariants({ variant: "secondary" })}>
                 Demande de commande
               </Link>
               <Link href={catalogPath} className={buttonVariants({ variant: "secondary" })}>
@@ -168,4 +174,3 @@ export default async function ProductPage({ params }: ProductPageProps) {
     </div>
   );
 }
-
