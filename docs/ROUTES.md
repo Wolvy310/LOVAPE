@@ -87,3 +87,22 @@
    - applique headers securite
    - protege routes admin
 2. Route `/dev/styleguide` visible uniquement hors production.
+
+## 8) Notes implementation Step C
+1. Listing catalogue publics operationnels:
+   - `/catalog/e-liquides`
+   - `/catalog/materiel-mtl`
+2. Query params supportes pour les listings:
+   - `q` (recherche texte)
+   - `brand` (slug marque)
+   - `nicotine` (e-liquides)
+   - `type` (materiel MTL)
+   - `sort` (`relevance`, `price-asc`, `price-desc`, `name-asc`, `name-desc`)
+   - `stock` (`all`, `in-stock`)
+   - `page` (pagination)
+3. Fiche produit publique operationnelle:
+   - `/product/[slug]`
+4. Etats UI couverts:
+   - loading (`loading.tsx`)
+   - empty result
+   - error boundary segment.

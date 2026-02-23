@@ -131,3 +131,11 @@ Le MVP est centre sur la prise de commande (Order Request) sans paiement en lign
 
 ## 12) Dependances externes a confirmer
 Voir `docs/TODO.md` pour les infos manquantes bloquees par decisions metier.
+
+## 13) Etat implementation Step C
+1. Catalogue e-liquides operationnel avec filtres, tri, pagination et etats UI.
+2. Catalogue materiel MTL operationnel avec filtres, tri, pagination et etats UI.
+3. Fiche produit publique `/product/[slug]` operationnelle:
+   - caracteristiques structurees
+   - avertissements visibles
+   - chemin vers demande de commande.

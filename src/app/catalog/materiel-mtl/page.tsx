@@ -1,10 +1,25 @@
-import { PagePlaceholder } from "@/components/page-placeholder";
+import type { Metadata } from "next";
 
-export default function MtlMaterialPage() {
+import { CatalogPage } from "@/components/catalog/catalog-page";
+
+export const metadata: Metadata = {
+  title: "Catalogue Materiel MTL",
+  description: "Materiel MTL LOVAPE: mods et clearomiseurs compatibles usage responsable."
+};
+
+interface MtlMaterialPageProps {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+}
+
+export default async function MtlMaterialPage({ searchParams }: MtlMaterialPageProps) {
+  const resolvedSearchParams = await searchParams;
   return (
-    <PagePlaceholder
+    <CatalogPage
+      family="MTL_MATERIAL"
+      actionPath="/catalog/materiel-mtl"
       title="Catalogue Materiel MTL"
-      description="Cette page sera implementee en Etape C avec filtres, tri et pagination."
+      description="Selection de mods et clearomiseurs MTL uniquement. Aucun pod, puff ou produit jetable."
+      searchParams={resolvedSearchParams}
     />
   );
 }

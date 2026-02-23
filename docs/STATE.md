@@ -1,65 +1,82 @@
-# LOVAPE - STATE (Etape B)
+# LOVAPE - STATE (Etape C)
 
 ## Etape en cours
-- Etape B terminee: fondation Postgres + Prisma completee.
+- Etape C terminee: UI catalogue publique et fiches produit implementees.
 
 ## Faits realises
-1. Schema Prisma complet implemente:
-   - enums metier (`CategoryFamily`, `ProductType`, `ProductStatus`, `StockPolicy`, `OrderStatus`, `ConsentScope`, `ConsentDecision`)
-   - modeles `Brand`, `Category`, `Product`, `Order`, `OrderItem`, `ConsentLog`, `AdminSession`
-2. Index et relations ajoutes selon `docs/DATA_MODEL.md`.
-3. Migration initiale SQL creee:
-   - `prisma/migrations/20260223153000_init/migration.sql`
-   - `prisma/migrations/migration_lock.toml`
-4. Garde-fous SQL ajoutes dans la migration:
-   - blocage pod/podmod/puff/jetable/disposable (categories + produits)
-   - checks non-negatifs (prix, stock, totaux, quantites)
-   - checks ratios PG/VG
-   - coherence puissance min/max materiel MTL
-5. Seed Prisma idempotent implemente:
-   - 6 marques e-liquides autorisees
-   - 1 marque materiel neutre
-   - 10 produits fictifs conformes (6 e-liquides + 4 materiels MTL)
-6. Couche DB serveur ajoutee:
-   - singleton Prisma dans `src/server/db.ts`
-7. Regles metier utilitaires ajoutees:
-   - `src/lib/vape-policy.ts` (termes interdits + whitelist marques e-liquides)
-8. Documentation memoire externe synchronisee:
-   - `docs/DATA_MODEL.md`
+1. Couche catalogue front introduite:
+   - dataset catalogue mock conforme (`src/lib/catalog-data.ts`)
+   - types metier front (`src/lib/catalog-types.ts`)
+   - moteur filtres/tri/pagination (`src/lib/catalog-query.ts`)
+2. Pages catalogue implementees:
+   - `/catalog/e-liquides`
+   - `/catalog/materiel-mtl`
+3. Fonctionnalites catalogue actives:
+   - filtres (marque, nicotine/type, stock)
+   - tri (pertinence, prix, nom)
+   - pagination
+   - recherche texte
+4. Etats UI couverts:
+   - loading (`loading.tsx`)
+   - empty result (etat vide)
+   - error boundaries segment (`error.tsx`)
+5. Fiche produit publique implementee:
+   - `/product/[slug]`
+   - specs structurees (e-liquides / materiel MTL)
+   - avertissements legaux visibles
+   - CTA vers demande de commande
+6. Design system applique sur catalogue/produit:
+   - nouveaux composants `Badge`, cartes produit, pagination, formulaires filtres
+7. Tests unitaires ajoutes pour la logique catalogue:
+   - `tests/unit/catalog-query.test.ts`
+8. Memoire externe synchronisee:
+   - `docs/ROUTES.md`
+   - `docs/SPEC.md`
+   - `docs/DESIGN_SYSTEM.md`
+   - `docs/STATE.md`
 
-## Fichiers touches (Etape B)
-1. `package.json`
-2. `package-lock.json`
-3. `prisma/schema.prisma`
-4. `prisma/seed.ts`
-5. `prisma/migrations/20260223153000_init/migration.sql`
-6. `prisma/migrations/migration_lock.toml`
-7. `src/server/db.ts`
-8. `src/server/index.ts`
-9. `src/lib/vape-policy.ts`
-10. `tests/unit/vape-policy.test.ts`
-11. `docs/DATA_MODEL.md`
-12. `docs/STATE.md`
+## Fichiers touches (Etape C)
+1. `src/lib/catalog-types.ts`
+2. `src/lib/catalog-data.ts`
+3. `src/lib/catalog-query.ts`
+4. `src/lib/format.ts`
+5. `src/components/ui/badge.tsx`
+6. `src/components/catalog/catalog-filter-form.tsx`
+7. `src/components/catalog/catalog-product-card.tsx`
+8. `src/components/catalog/catalog-pagination.tsx`
+9. `src/components/catalog/catalog-loading-grid.tsx`
+10. `src/components/catalog/catalog-empty-state.tsx`
+11. `src/components/catalog/catalog-page.tsx`
+12. `src/app/catalog/e-liquides/page.tsx`
+13. `src/app/catalog/e-liquides/loading.tsx`
+14. `src/app/catalog/e-liquides/error.tsx`
+15. `src/app/catalog/materiel-mtl/page.tsx`
+16. `src/app/catalog/materiel-mtl/loading.tsx`
+17. `src/app/catalog/materiel-mtl/error.tsx`
+18. `src/app/product/[slug]/page.tsx`
+19. `src/app/product/[slug]/loading.tsx`
+20. `src/app/product/[slug]/not-found.tsx`
+21. `src/app/product/[slug]/error.tsx`
+22. `src/app/dev/styleguide/page.tsx`
+23. `docs/ROUTES.md`
+24. `docs/SPEC.md`
+25. `docs/DESIGN_SYSTEM.md`
+26. `docs/STATE.md`
+27. `tests/unit/catalog-query.test.ts`
 
 ## Commandes de verification executees (non interactif)
-1. `npm install` -> OK
-2. `npm run prisma:generate` -> OK
-3. `npm run lint` -> OK
-4. `npm run typecheck` -> OK
-5. `npm test` -> OK (7 tests)
-6. `npm run build:guard` -> OK
-
-## Commandes non executees (contexte local)
-1. `npm run prisma:migrate:deploy` non executee ici (pas de base Postgres locale configuree).
-2. `npm run prisma:seed` non executee ici (depend d'une DB reachable via `DATABASE_URL`).
+1. `npm run lint` -> OK
+2. `npm run typecheck` -> OK
+3. `npm test` -> OK (12 tests)
+4. `npm run build:guard` -> OK
 
 ## Risques / points a surveiller
-1. Les migrations/seed doivent etre testes sur une vraie DB en Step J runbook/deploiement.
-2. Les checks SQL protegent la DB, mais les guards API/admin doivent encore etre branches (Step G).
-3. La couche checkout/orders n'est pas encore connectee a la DB (Step D).
+1. Le catalogue Step C repose sur un dataset mock; la connexion DB runtime arrive en Step D/G.
+2. Les routes API catalogue ne sont pas encore implementees.
+3. Le panier reste non branche (Step D).
 
 ## Prochaine etape
-- Etape C:
-  - UI catalogue complete (listing, filtres, tri, pagination)
-  - fiches produits detaillees
-  - application concrete du design system sur pages produit.
+- Etape D:
+  - panier localStorage
+  - checkout request vers DB (`Order`/`OrderItem`)
+  - page confirmation et parcours post-soumission.

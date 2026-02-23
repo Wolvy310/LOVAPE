@@ -105,3 +105,14 @@ xl 20px
 2. Open Graph image.
 3. Placeholders logo/produit.
 4. Alt text explicite pour chaque media utile.
+
+## 10) Etat implementation Step C
+1. Composants appliques aux pages catalogue:
+   - cartes produit
+   - badges marque/stock/legal
+   - formulaires filtres
+   - pagination
+2. Etats UI visibles:
+   - loading (skeleton)
+   - empty result
+   - error segment.
