@@ -133,3 +133,15 @@
    - connecteur
    - plage de puissance commune
    - plage de resistance commune.
+
+## 11) Notes implementation Step F
+1. Guide public operationnel:
+   - `/guide`
+   - `/guide/[slug]`
+2. Le guide couvre:
+   - parcours debutant MTL
+   - lexique de base
+   - contenus de bon usage non medical.
+3. Maillage interne renforce:
+   - guide -> catalogues publics
+   - fiche produit -> article guide pertinent.

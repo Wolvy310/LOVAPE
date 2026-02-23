@@ -79,3 +79,10 @@
 1. Toute nouvelle campagne doit respecter `COPY_GUIDE.md`.
 2. Toute nouvelle fonctionnalite marketing doit etre validee contre `SPEC.md`.
 3. Si besoin d'exception, mise a jour explicite de `SPEC.md` + `AGENTS.md` avant implementation.
+
+## 9) Notes implementation Step F
+1. Le hub `/guide` est actif avec contenus evergreen.
+2. Le minimum initial de 5 contenus guide est atteint.
+3. Les liens croises suivants sont en place:
+   - guide -> catalogues publics
+   - fiche produit -> article guide pertinent.

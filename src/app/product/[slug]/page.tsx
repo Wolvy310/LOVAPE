@@ -79,6 +79,9 @@ export default async function ProductPage({ params }: ProductPageProps) {
   const specs = getProductSpecs(product);
   const isAvailable = product.stockPolicy === "INFINITE" || product.stockQty > 0;
   const catalogPath = product.family === "E_LIQUID" ? "/catalog/e-liquides" : "/catalog/materiel-mtl";
+  const relatedGuideHref = product.family === "E_LIQUID" ? "/guide/choisir-e-liquide-mtl" : "/guide/regler-mod-mtl";
+  const relatedGuideLabel =
+    product.family === "E_LIQUID" ? "Guide: choisir un e-liquide MTL" : "Guide: regler un setup MTL";
   const configuratorHref =
     product.type === "MTL_MOD"
       ? `/configurateur/mod-clearo?mod=${encodeURIComponent(product.slug)}`
@@ -179,6 +182,9 @@ export default async function ProductPage({ params }: ProductPageProps) {
             <Alert variant="warning">Si vous ne fumez pas, ne vapez pas.</Alert>
             <Alert variant="warning">Vente interdite aux mineurs.</Alert>
             <Alert>Les specifications sont informatives pour le MVP et seront precisees en administration.</Alert>
+            <Link href={relatedGuideHref} className={buttonVariants({ variant: "secondary", size: "sm" })}>
+              {relatedGuideLabel}
+            </Link>
           </CardContent>
         </Card>
       </section>

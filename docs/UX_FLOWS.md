@@ -70,6 +70,19 @@
 5. Si incompatible:
    - message explicite et action corrective (changer mod ou clearomiseur).
 
+### Etape F: Guide public
+1. Visiteur ouvre `/guide`.
+2. Le hub affiche:
+   - parcours debutant recommande
+   - liste des articles
+   - lexique rapide.
+3. Visiteur ouvre un article `/guide/[slug]`.
+4. Chaque article propose:
+   - contenu informatif non medical
+   - liens vers catalogues
+   - lien de continuation parcours debutant si applicable.
+5. Depuis les fiches produit, un lien guide pertinent reste accessible.
+
 ## 3) Flow admin: Ajout produit conforme
 ### Etape A: Auth
 1. Admin va sur `/admin/login`.

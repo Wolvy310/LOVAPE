@@ -167,3 +167,20 @@ Voir `docs/TODO.md` pour les infos manquantes bloquees par decisions metier.
    - verification plage de puissance commune
    - verification plage de resistance commune.
 3. Tests unitaires de compatibilite ajoutes et couverts.
+
+## 16) Etat implementation Step F
+1. Guide public operationnel:
+   - hub `/guide`
+   - articles `/guide/[slug]` en generation statique
+2. Contenu guide initial couvre:
+   - parcours debutant MTL
+   - choix e-liquide MTL
+   - reglage mod MTL
+   - entretien clearomiseur
+   - preparation demande de commande
+3. Lexique de base integre au hub guide.
+4. Disclaimer guide visible:
+   - "Contenu informatif, non medical."
+5. Maillage interne renforce:
+   - guide vers catalogues publics
+   - fiche produit vers article guide pertinent.
