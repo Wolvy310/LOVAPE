@@ -192,3 +192,11 @@ Objectif:
 2. Le cookie navigateur ne contient pas le hash DB:
    - token brut signe par `SESSION_SECRET`
    - verification signature + lookup DB cote serveur.
+
+## 10) Implementation Step H (etat reel)
+1. `ConsentLog` est alimente par `POST /api/consent` pour le scope `ANALYTICS`.
+2. Chaque changement de consentement journalise:
+   - `decision` (`ACCEPTED` / `REJECTED`)
+   - `pagePath`
+   - `requestId`
+   - `userAgent` / `ipHash` si disponibles.

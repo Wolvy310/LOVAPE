@@ -56,3 +56,9 @@
 ## 8) Gouvernance
 1. Toute nouvelle metrique doit etre ajoutee ici avant implementation.
 2. Toute nouvelle categorie de consentement doit passer revue legal.
+
+## 9) Notes implementation Step H
+1. Bandeau cookies global actif avec choix `Accepter`, `Refuser`, `Personnaliser`.
+2. Page `/cookies` active avec details categories et mise a jour du choix.
+3. Route `POST /api/consent` active avec creation `ConsentLog`.
+4. `trackEvent` reste no-op si `NEXT_PUBLIC_ANALYTICS_ENABLED=false` ou sans consentement analytics accepte.

@@ -97,6 +97,17 @@
    - suppression session
    - cookie invalide.
 
+### Etape H: Consentement cookies/analytics
+1. Visiteur voit le bandeau cookies au premier chargement.
+2. Trois actions possibles:
+   - accepter analytics
+   - refuser analytics
+   - ouvrir `/cookies` pour details.
+3. A chaque choix:
+   - `POST /api/consent`
+   - creation d une preuve `ConsentLog`.
+4. Le tracking analytics reste inactif tant que le consentement analytics n est pas accepte.
+
 ## 3) Flow admin: Ajout produit conforme
 ### Etape A: Auth
 1. Admin va sur `/admin/login`.

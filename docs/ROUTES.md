@@ -156,3 +156,13 @@
    - verification DB de session dans les routes API admin.
 3. Auth temporaire par header retiree:
    - suppression dependance a `x-admin-password` dans les routes admin.
+
+## 13) Notes implementation Step H
+1. Gestion cookies/consentement operationnelle:
+   - page publique `/cookies`
+   - bandeau cookies global avec choix `Accepter` / `Refuser` / `Personnaliser`.
+2. API consentement active:
+   - `POST /api/consent`
+   - enregistrement `ConsentLog` scope `ANALYTICS`.
+3. Regle opt-in appliquee:
+   - tracking analytics no-op tant que consentement analytics non accepte.

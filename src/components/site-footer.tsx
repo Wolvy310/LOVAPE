@@ -22,6 +22,9 @@ export function SiteFooter() {
           <Link href="/confidentialite" className="text-muted-foreground hover:text-foreground">
             Confidentialite
           </Link>
+          <Link href="/cookies" className="text-muted-foreground hover:text-foreground">
+            Cookies
+          </Link>
         </div>
       </div>
     </footer>

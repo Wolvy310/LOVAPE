@@ -3,6 +3,7 @@
 import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
+import { trackEvent } from "@/lib/analytics";
 import { addToCart } from "@/lib/cart-storage";
 import type { CartItemInput } from "@/lib/cart-types";
 
@@ -25,6 +26,12 @@ export function AddToCartButton({
 
   const handleClick = () => {
     addToCart(item, quantity);
+    trackEvent("add_to_cart", {
+      sku: item.sku,
+      qty: quantity,
+      price_cents: item.priceCents,
+      product_type: item.productType
+    });
     setAdded(true);
     window.setTimeout(() => setAdded(false), 1000);
   };
@@ -35,4 +42,3 @@ export function AddToCartButton({
     </Button>
   );
 }
-

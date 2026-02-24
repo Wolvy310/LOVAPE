@@ -198,3 +198,14 @@ Voir `docs/TODO.md` pour les infos manquantes bloquees par decisions metier.
 4. Ecran de login admin et dashboard admin minimal disponibles:
    - `/admin/login`
    - `/admin`.
+
+## 18) Etat implementation Step H
+1. Consentement cookies/analytics operationnel:
+   - bandeau cookies global
+   - page `/cookies` detaillee avec gestion des preferences.
+2. API consentement publique operationnelle:
+   - `POST /api/consent`
+   - creation de preuves `ConsentLog`.
+3. Opt-in analytics applique:
+   - tracking desactive par defaut
+   - activation uniquement apres consentement `ANALYTICS` accepte.

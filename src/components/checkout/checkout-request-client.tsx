@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { type FormEvent, useEffect, useMemo, useState } from "react";
+import { type FormEvent, useEffect, useMemo, useRef, useState } from "react";
 
+import { trackEvent } from "@/lib/analytics";
 import { Alert } from "@/components/ui/alert";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -39,6 +40,7 @@ export function CheckoutRequestClient() {
   const [form, setForm] = useState<CheckoutFormState>(INITIAL_FORM_STATE);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const beginCheckoutTrackedRef = useRef(false);
 
   useEffect(() => {
     const sync = () => setItems(readCart());
@@ -47,6 +49,18 @@ export function CheckoutRequestClient() {
   }, []);
 
   const totals = useMemo(() => getCartTotals(items), [items]);
+
+  useEffect(() => {
+    if (items.length === 0 || beginCheckoutTrackedRef.current) {
+      return;
+    }
+
+    trackEvent("begin_checkout_request", {
+      cart_size: totals.itemCount,
+      cart_total_cents: totals.totalCents
+    });
+    beginCheckoutTrackedRef.current = true;
+  }, [items.length, totals.itemCount, totals.totalCents]);
 
   const setField = <K extends keyof CheckoutFormState>(field: K, value: CheckoutFormState[K]) => {
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -92,6 +106,12 @@ export function CheckoutRequestClient() {
         setSubmitError(payload.error ?? "Impossible d'envoyer la demande pour le moment.");
         return;
       }
+
+      trackEvent("submit_request", {
+        order_ref: payload.orderRef,
+        cart_size: totals.itemCount,
+        total_cents: totals.totalCents
+      });
 
       clearCart();
       router.push(`/checkout/confirmation/${payload.orderRef}`);
