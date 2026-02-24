@@ -3,7 +3,7 @@
 E-commerce vape responsable (orientation MTL) en mode **prise de commande**.
 
 ## Etat du projet
-- Step courant: `step-i`
+- Step courant: `step-j`
 - Paiement en ligne: desactive (MVP)
 - Deploiement cible: Vercel
 

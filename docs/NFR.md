@@ -108,3 +108,13 @@ La CI doit echouer si une des commandes echoue:
    - soumission checkout avec redirection confirmation (API mockee).
 2. CI etend le pipeline qualite avec `npm run test:e2e:guard`.
 3. Playwright web server automatise bascule sur `npm run start` (plus de `npm run dev` en verification).
+
+## 13) Notes implementation Step J
+1. E2E sans mock reseau ajoute sur flux public reel:
+   - `catalogue e-liquides -> fiche produit -> panier`
+   - `catalogue materiel MTL -> fiche produit -> panier -> reload`.
+2. Seed e2e dedie stabilise:
+   - fixture `tests/e2e/fixtures/catalog-seed.ts` alignee sur `catalog-data`.
+3. Initialisation e2e navigateur stabilisee:
+   - consentement analytics force en `rejected`
+   - panier vide uniquement a la premiere navigation du test (pas de reset au reload).

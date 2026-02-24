@@ -220,3 +220,13 @@ Voir `docs/TODO.md` pour les infos manquantes bloquees par decisions metier.
 2. Guard e2e CI active:
    - pipeline GitHub Actions execute `npm run test:e2e:guard`.
 3. Playwright lance l application en `npm run start` pour rester conforme a la command safety.
+
+## 20) Etat implementation Step J
+1. Parcours e2e public sans mock ajoute:
+   - `catalogue e-liquides -> fiche produit -> ajout panier -> panier`
+   - `catalogue materiel MTL -> fiche produit -> ajout panier -> panier -> reload`.
+2. Seed e2e dedie introduit:
+   - fixture stable `tests/e2e/fixtures/catalog-seed.ts` (slugs/SKU de reference).
+3. Stabilisation et isolation e2e:
+   - preparation navigateur deterministic (consentement + panier)
+   - conservation du panier entre actions et reload dans le meme test.
