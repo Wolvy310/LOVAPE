@@ -13,7 +13,7 @@ const updateStatusSchema = z.object({
 });
 
 export async function PATCH(request: Request, { params }: RouteProps): Promise<Response> {
-  if (!isAdminRequestAuthorized(request)) {
+  if (!(await isAdminRequestAuthorized(request))) {
     return createAdminUnauthorizedResponse();
   }
 

@@ -5,7 +5,7 @@ import { prisma } from "@/server/db";
 const HEADERS = ["id", "scope", "decision", "pagePath", "requestId", "userAgent", "ipHash", "userHash", "createdAt"];
 
 export async function GET(request: Request): Promise<Response> {
-  if (!isAdminRequestAuthorized(request)) {
+  if (!(await isAdminRequestAuthorized(request))) {
     return createAdminUnauthorizedResponse();
   }
 
@@ -34,4 +34,3 @@ export async function GET(request: Request): Promise<Response> {
     }
   });
 }
-

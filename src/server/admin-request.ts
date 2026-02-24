@@ -1,30 +1,15 @@
-import { timingSafeEqual } from "node:crypto";
+import { getAdminSessionFromRequest } from "@/server/admin-session";
 
-function safeEqual(left: string, right: string): boolean {
-  const leftBuffer = Buffer.from(left);
-  const rightBuffer = Buffer.from(right);
-  if (leftBuffer.length !== rightBuffer.length) {
-    return false;
-  }
-  return timingSafeEqual(leftBuffer, rightBuffer);
-}
-
-export function isAdminRequestAuthorized(request: Request): boolean {
-  const configured = process.env.ADMIN_PASSWORD?.trim();
-  if (!configured) return false;
-
-  const provided = request.headers.get("x-admin-password")?.trim();
-  if (!provided) return false;
-
-  return safeEqual(provided, configured);
+export async function isAdminRequestAuthorized(request: Request): Promise<boolean> {
+  const session = await getAdminSessionFromRequest(request);
+  return Boolean(session);
 }
 
 export function createAdminUnauthorizedResponse(): Response {
   return Response.json(
     {
-      error: "Unauthorized admin request. Provide a valid x-admin-password header."
+      error: "Unauthorized admin request. Please log in to an admin session."
     },
     { status: 401 }
   );
 }
-

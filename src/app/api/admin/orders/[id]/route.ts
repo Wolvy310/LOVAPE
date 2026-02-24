@@ -6,7 +6,7 @@ interface RouteProps {
 }
 
 export async function GET(request: Request, { params }: RouteProps): Promise<Response> {
-  if (!isAdminRequestAuthorized(request)) {
+  if (!(await isAdminRequestAuthorized(request))) {
     return createAdminUnauthorizedResponse();
   }
 
@@ -24,4 +24,3 @@ export async function GET(request: Request, { params }: RouteProps): Promise<Res
 
   return Response.json({ item: order });
 }
-

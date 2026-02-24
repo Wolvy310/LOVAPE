@@ -184,3 +184,17 @@ Voir `docs/TODO.md` pour les infos manquantes bloquees par decisions metier.
 5. Maillage interne renforce:
    - guide vers catalogues publics
    - fiche produit vers article guide pertinent.
+
+## 17) Etat implementation Step G
+1. Auth admin complete operationnelle:
+   - login `POST /api/admin/login`
+   - logout `POST /api/admin/logout`
+   - cookie session HttpOnly signe.
+2. Verification session appliquee aux routes API admin:
+   - remplacement du header temporaire `x-admin-password`.
+3. Middleware renforce:
+   - redirection vers `/admin/login` sur routes UI admin sans session
+   - rejection `401` sur routes `/api/admin/*` sans session.
+4. Ecran de login admin et dashboard admin minimal disponibles:
+   - `/admin/login`
+   - `/admin`.

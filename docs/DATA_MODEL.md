@@ -183,3 +183,12 @@ Objectif:
    - 6 marques e-liquides autorisees
    - 1 marque materiel neutre (`LovaTech`)
    - 10 produits fictifs conformes (6 e-liquides, 4 materiels MTL)
+
+## 9) Implementation Step G (etat reel)
+1. `AdminSession` est exploite pour l auth admin session-based:
+   - hash de token stocke (`tokenHash`)
+   - expiration session (`expiresAt`)
+   - rafraichissement activite (`lastSeenAt`)
+2. Le cookie navigateur ne contient pas le hash DB:
+   - token brut signe par `SESSION_SECRET`
+   - verification signature + lookup DB cote serveur.

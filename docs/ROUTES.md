@@ -32,8 +32,6 @@
 | Methode | Route | Auth | Description |
 |---|---|---|---|
 | GET | `/admin/login` | Public | Ecran login admin |
-| POST | `/admin/login` | Public | Creation session admin |
-| POST | `/admin/logout` | Admin | Suppression session admin |
 | GET | `/admin` | Admin | Dashboard |
 | GET | `/admin/brands` | Admin | Liste marques |
 | GET | `/admin/categories` | Admin | Liste categories |
@@ -52,6 +50,7 @@
 | POST | `/api/checkout/request` | Public | Cree commande statut `REQUESTED` |
 | POST | `/api/contact` | Public | Message SAV/contact |
 | POST | `/api/consent` | Public | Enregistre consentement analytics |
+| POST | `/api/admin/login` | Public | Creation session admin (cookie HttpOnly) |
 
 ## 5) Routes API admin
 | Methode | Route | Auth | Description |
@@ -70,6 +69,7 @@
 | PATCH | `/api/admin/orders/[id]/status` | Admin | Change statut commande |
 | GET | `/api/admin/orders/export.csv` | Admin | Export CSV commandes |
 | GET | `/api/admin/consents/export.csv` | Admin | Export CSV consent logs |
+| POST | `/api/admin/logout` | Admin | Suppression session admin |
 
 ## 6) Conventions de validation et erreurs
 1. Toutes les mutations passent par validation Zod.
@@ -145,3 +145,14 @@
 3. Maillage interne renforce:
    - guide -> catalogues publics
    - fiche produit -> article guide pertinent.
+
+## 12) Notes implementation Step G
+1. Auth admin session-based operationnelle:
+   - login `POST /api/admin/login`
+   - logout `POST /api/admin/logout`
+   - cookie HttpOnly signe (`lovape_admin_session`)
+2. Protection admin appliquee:
+   - middleware bloque `/admin` et `/api/admin/*` sans session cookie
+   - verification DB de session dans les routes API admin.
+3. Auth temporaire par header retiree:
+   - suppression dependance a `x-admin-password` dans les routes admin.

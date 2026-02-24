@@ -83,6 +83,20 @@
    - lien de continuation parcours debutant si applicable.
 5. Depuis les fiches produit, un lien guide pertinent reste accessible.
 
+### Etape G: Auth admin session
+1. Admin ouvre `/admin/login`.
+2. Soumet son mot de passe admin.
+3. Si succes:
+   - creation session en DB
+   - pose cookie HttpOnly signe
+   - redirection vers `/admin`.
+4. Middleware protege:
+   - routes UI `/admin*`
+   - routes API `/api/admin/*`.
+5. Deconnexion:
+   - suppression session
+   - cookie invalide.
+
 ## 3) Flow admin: Ajout produit conforme
 ### Etape A: Auth
 1. Admin va sur `/admin/login`.

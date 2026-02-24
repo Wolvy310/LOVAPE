@@ -21,7 +21,7 @@ const HEADERS = [
 ];
 
 export async function GET(request: Request): Promise<Response> {
-  if (!isAdminRequestAuthorized(request)) {
+  if (!(await isAdminRequestAuthorized(request))) {
     return createAdminUnauthorizedResponse();
   }
 
@@ -84,4 +84,3 @@ export async function GET(request: Request): Promise<Response> {
     }
   });
 }
-

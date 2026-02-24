@@ -2,7 +2,7 @@ import { prisma } from "@/server/db";
 import { createAdminUnauthorizedResponse, isAdminRequestAuthorized } from "@/server/admin-request";
 
 export async function GET(request: Request): Promise<Response> {
-  if (!isAdminRequestAuthorized(request)) {
+  if (!(await isAdminRequestAuthorized(request))) {
     return createAdminUnauthorizedResponse();
   }
 
@@ -33,4 +33,3 @@ export async function GET(request: Request): Promise<Response> {
     }))
   });
 }
-
