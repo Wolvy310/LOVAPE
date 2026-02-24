@@ -3,7 +3,7 @@
 E-commerce vape responsable (orientation MTL) en mode **prise de commande**.
 
 ## Etat du projet
-- Step courant: `step-a`
+- Step courant: `step-i`
 - Paiement en ligne: desactive (MVP)
 - Deploiement cible: Vercel
 
@@ -58,6 +58,7 @@ $env:npm_config_audit='false'
 npm run lint
 npm run typecheck
 npm test
+npm run test:e2e:guard
 npm run build:guard
 ```
 
@@ -90,4 +91,3 @@ npm run build:guard
 
 ## Licence
 MIT - voir `LICENSE`.
-

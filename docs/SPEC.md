@@ -55,7 +55,7 @@ Le MVP est centre sur la prise de commande (Order Request) sans paiement en lign
 3. Postgres + Prisma (migrations versionnees).
 4. Deploy cible: Vercel (prod + previews).
 5. Auth admin: simple, basee sur secret env + session securisee.
-6. CI GitHub Actions: lint + typecheck + tests + build garde.
+6. CI GitHub Actions: lint + typecheck + unit tests + e2e guard + build guard.
 7. Command safety:
    - ne jamais lancer `npm run build` directement
    - utiliser `npm run build:guard`
@@ -118,11 +118,12 @@ Le MVP est centre sur la prise de commande (Order Request) sans paiement en lign
 ## 10) Definition of Done globale (rappel)
 1. `npm run lint` OK
 2. `npm run typecheck` OK
-3. Tests pertinents OK
+3. `npm test` OK
 4. `npm run build:guard` OK
-5. Docs a jour: `SPEC`, `ROUTES`, `DATA_MODEL`, `NFR`, `STATE`
-6. Aucun secret dans le repo
-7. Impossible de creer des pods/puffs/jetables via admin
+5. `npm run test:e2e:guard` OK
+6. Docs a jour: `SPEC`, `ROUTES`, `DATA_MODEL`, `NFR`, `STATE`
+7. Aucun secret dans le repo
+8. Impossible de creer des pods/puffs/jetables via admin
 
 ## 11) Journal de decisions initial
 1. DEC-001: Checkout en mode request-first pour de-risquer legal et PSP.
@@ -209,3 +210,13 @@ Voir `docs/TODO.md` pour les infos manquantes bloquees par decisions metier.
 3. Opt-in analytics applique:
    - tracking desactive par defaut
    - activation uniquement apres consentement `ANALYTICS` accepte.
+
+## 19) Etat implementation Step I
+1. Stabilisation e2e critique implemente via Playwright:
+   - consentement cookies (refus + persistence)
+   - protection admin UI/API sans session
+   - garde checkout panier vide
+   - soumission checkout avec redirection confirmation (API mockee).
+2. Guard e2e CI active:
+   - pipeline GitHub Actions execute `npm run test:e2e:guard`.
+3. Playwright lance l application en `npm run start` pour rester conforme a la command safety.

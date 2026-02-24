@@ -28,6 +28,7 @@ $env:npm_config_audit='false'
 npm run lint
 npm run typecheck
 npm test
+npm run test:e2e:guard
 npm run build:guard
 ```
 
@@ -37,8 +38,7 @@ npm run build:guard
 3. If a guarded command exits with `124`, stop and diagnose.
 
 ## 5) Definition of Done (step level)
-1. Lint/typecheck/tests/build guard pass.
+1. Lint/typecheck/unit/e2e/build guard pass.
 2. Docs are updated.
 3. No secrets committed.
 4. Vape constraints respected (no pods/puffs/jetables/disposables).
-

@@ -93,9 +93,18 @@ La CI doit echouer si une des commandes echoue:
 2. `npm run typecheck`
 3. `npm test`
 4. `npm run build:guard`
-5. (etape I) `npm run test:e2e:guard`
+5. `npm run test:e2e:guard`
 
 ## 11) Notes implementation Step H
 1. Bandeau cookies opt-in analytics implemente.
 2. API `POST /api/consent` enregistre les preuves de consentement.
 3. Tracking analytics reste no-op sans consentement explicite.
+
+## 12) Notes implementation Step I
+1. Suite Playwright e2e critique etendue:
+   - consentement cookies (refus + persistence)
+   - protection admin UI/API sans session
+   - garde checkout panier vide
+   - soumission checkout avec redirection confirmation (API mockee).
+2. CI etend le pipeline qualite avec `npm run test:e2e:guard`.
+3. Playwright web server automatise bascule sur `npm run start` (plus de `npm run dev` en verification).
